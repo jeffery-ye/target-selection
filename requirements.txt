@@ -1,0 +1,6 @@
+langchain
+langgraph
+langchain-openai
+pydantic
+pydantic-ai
+python-dotenv
