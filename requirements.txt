@@ -4,3 +4,4 @@ langchain-google-genai
 pydantic
 pydantic-ai
 python-dotenv
+requests
