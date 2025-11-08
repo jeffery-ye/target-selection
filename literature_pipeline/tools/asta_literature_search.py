@@ -16,6 +16,9 @@ ArticleListAdapter = TypeAdapter(List[Article])
 
 def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
     """
+    Part of the literature_retrieval_node: This tool uses Semantic Scholar
+    to retrieve n number of papers, returning a list of articles.
+    
     Searches papers using the Semantic Scholar API directly.
     """
     if not SEMANTIC_SCHOLAR_API_KEY:
