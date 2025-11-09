@@ -39,8 +39,9 @@ class PipelineState(TypedDict):
     original_query: str
     target_protein_count: int
     
-    retrieved_articles: List[Article]
+    articles_to_process: List[Article]
     article_status: List[Article]
+    retrieved_articles: List[Article]
     
     protein_candidates: List[ProteinCandidate]
     validated_uniprot_ids: List[str]

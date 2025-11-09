@@ -1,33 +1,64 @@
-from typing import List
-from ..schemas import PipelineState, Article
+from typing import List, Dict
+from ..schemas import PipelineState, Article, ArticleReflection, ReflectionBatch
 from ..tools.literature_reflection import article_reflection_tool
 
-def literature_reflection_node(state: PipelineState) -> PipelineState:
+def literature_reflection_node(state: PipelineState) -> Dict:
     """
-    Loops through all retrieved articles
-    Evaluates likelihood to contain potential drug targets
-    Returns ones that are likely
+    Reflects on new articles using an LLM to classify their relevance.
+    
+    Filters the article list to only include those classified as 'true'.
     """
 
     print("--- LITERATURE REFLECTION AGENT ---")
-    retrieved_articles = state["retrieved_articles"]
     
+    articles_to_reflect = state["articles_to_process"]
+    
+    if not articles_to_reflect:
+        print("Reflection: No new articles to process.")
+        return {"articles_to_process": []}
+
     try:
-        requirements = "This article must be be related to potential drug, vaccine, antifungul, etc. targets in either Coccidioides Valley Fever or Aspergillus."
+        requirements = "This article must be related to potential drug, vaccine, or antifungal targets in either Coccidioides or Aspergillus."
         
-        # Use the tool to classify articles
-        article_reflection_tool(
-            articles=retrieved_articles,
+        reflection_batch: ReflectionBatch = article_reflection_tool(
+            articles=articles_to_reflect,
             requirements=requirements
         )
         
-        
-    except Exception as e:
-        # Handle tool failure (e.g., API error, validation error)
-        print(f"Literature agent failed: {e}")
-        return {
-            "retrieved_articles": [],
-        }
-    
+        # Map DOIs
+        article_map = {}
 
-    return
+        for article in articles_to_reflect:
+            article_map[article.doi] = article
+            
+        
+        articles_for_ner = []
+        articles_for_full_text = []
+        discarded = 0
+        
+        for reflection in reflection_batch.reflections:
+            article = article_map.get(reflection.doi)
+            if not article:
+                continue
+
+            if reflection.classification == "true":
+                articles_for_ner.append(article)
+            elif reflection.classification == "unclear":
+                articles_for_full_text.append(article)
+            else:
+                discarded += 1
+        
+        print(f"Reflection complete. Relevant: {len(articles_for_ner)}. Unclear: {len(articles_for_full_text)}. {discarded} articles discarded.")
+        
+        # Return the state update
+        # Only 'true' articles proceed to the next node (NER)
+        return {
+            "articles_to_process": articles_for_ner
+            # "articles_for_full_text_review": articles_for_full_text # TODO: Add to state
+        }
+
+    except Exception as e:
+        print(f"Literature reflection agent failed: {e}")
+        return {
+            "articles_to_process": [],
+        }
