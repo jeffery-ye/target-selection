@@ -1,7 +1,7 @@
 from ..schemas import PipelineState
 from ..tools.asta_literature_search import search_asta_mcp_tool
 
-def literature_node(state: PipelineState) -> dict:
+def literature_retrieval_node(state: PipelineState) -> dict:
     """
     Reads the query from the state, calls the Asta tool, 
     and returns the new articles to be added to the state.

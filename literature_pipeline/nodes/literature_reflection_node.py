@@ -53,7 +53,7 @@ def literature_reflection_node(state: PipelineState) -> Dict:
         # Return the state update
         # Only 'true' articles proceed to the next node (NER)
         return {
-            "articles_to_process": articles_for_ner
+            "confirmed_articles": articles_for_ner
             # "articles_for_full_text_review": articles_for_full_text # TODO: Add to state
         }
 

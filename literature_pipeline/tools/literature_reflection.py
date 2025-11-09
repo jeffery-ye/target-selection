@@ -28,7 +28,7 @@ def article_reflection_tool(articles: List[Article], requirements: str) -> Refle
         text_for_llm += f"DOI: {article.doi}\nABSTRACT: {article.abstract}\n\n"
         
     agent = Agent(  
-        'google-gla:gemini-2.5-pro',  
+        'google-gla:gemini-2.5-flash',  
         output_type=ReflectionBatch,  
         instructions=(f"""
             Review the following scientific abstracts based on this requirement: '{requirements}'
@@ -48,11 +48,19 @@ def article_reflection_tool(articles: List[Article], requirements: str) -> Refle
     # Execute the agent call
     try:
         # PydanticAI runs the LLM, validates, and returns the object
-        result = agent.run_sync(f"Here are the articles: {text_for_llm}")
+        run_result = agent.run_sync(f"Here are the articles: {text_for_llm}")
+        print(run_result.output)
+        print(run_result.usage())
+
+        return run_result.output
         
-        print(f"Tool: Reflection complete. Validated {len(result.reflections)} decisions.")
-        return result
-        
+    except AttributeError as e:
+        print(f"Tool Error: {e}")
+        print("Tool Debug: The 'run_result' object did not have an '.output' attribute or '.output' was None.")
+        print(f"Tool Debug: Full run_result object: {run_result}")
+        raise
     except Exception as e:
         print(f"Tool Error: PydanticAI reflection failed. {e}")
+        if run_result:
+            print(f"Tool Debug: Full run_result object: {run_result}")
         raise
