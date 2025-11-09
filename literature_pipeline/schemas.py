@@ -41,6 +41,8 @@ class PipelineState(TypedDict):
     
     articles_to_process: List[Article]
     article_status: List[Article]
+
+    unclear_articles: List[Article]
     confirmed_articles: List[Article]
     
     protein_candidates: List[ProteinCandidate]
