@@ -46,7 +46,8 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
             SEMANTIC_SCHOLAR_API_URL,
             headers=headers,
             params=params,
-            timeout=30
+            timeout=30,
+            verify=False
         )
         
         logger.info(f"Tool: Response status: {response.status_code}")
@@ -83,6 +84,15 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         validated_articles = ArticleListAdapter.validate_python(transformed_results)
         
         logger.info(f"Tool: Success. Found {len(validated_articles)} articles.\n")
+        for article in validated_articles:
+            # Build a structured, multi-line string for the log
+            log_entry = (
+                f"\n  DOI:           {article.doi}\n"
+                f"  Title:         {article.title}\n"
+                f"  Abstract:      {article.abstract}"
+            )
+            logger.info(log_entry + "\n")
+            
         return validated_articles
         
     except requests.exceptions.HTTPError as e:
