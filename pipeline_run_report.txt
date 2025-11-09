@@ -1,21 +1,69 @@
-2025-11-08 17:19:53,148 - INFO - --- Starting New Pipeline Run ---
+2025-11-08 18:08:09,459 - INFO - --- Starting New Pipeline Run ---
 
-2025-11-08 17:19:53,152 - INFO - Initial State: query='drug targets for Coccidioides'
+2025-11-08 18:08:09,464 - INFO - Initial State: query='drug targets for Coccidioides'
 
-2025-11-08 17:19:53,287 - INFO - --- LITERATURE EXTRACTION ---
-2025-11-08 17:19:53,287 - INFO - Tool: Calling Semantic Scholar API. Query: drug targets for Coccidioides... Size: 10
-2025-11-08 17:19:54,033 - INFO - Tool: Response status: 200
-2025-11-08 17:19:54,034 - INFO - Tool: Success. Found 10 articles.
+2025-11-08 18:08:09,606 - INFO - --- LITERATURE EXTRACTION ---
+2025-11-08 18:08:09,606 - INFO - Tool: Calling Semantic Scholar API. Query: drug targets for Coccidioides... Size: 10
+2025-11-08 18:08:10,459 - INFO - Tool: Response status: 200
+2025-11-08 18:08:10,459 - INFO - Tool: Success. Found 10 articles.
 
-2025-11-08 17:19:54,035 - INFO - Found 10 new articles.
+2025-11-08 18:08:10,460 - INFO - Found 10 new articles.
 
-2025-11-08 17:19:54,041 - INFO - --- LITERATURE REFLECTION AGENT ---
-2025-11-08 17:19:54,203 - INFO - Tool: Reflecting on 10 articles with Gemini Flash...
-2025-11-08 17:22:35,369 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
-2025-11-08 17:22:35,379 - INFO - Tool Error: PydanticAI reflection failed. Invalid response from OpenAI chat completions endpoint: 1 validation error for ChatCompletion
-choices.0.message.role
-  Input should be 'assistant' [type=literal_error, input_value='', input_type=str]
-    For further information visit https://errors.pydantic.dev/2.12/v/literal_error
-2025-11-08 17:22:35,380 - INFO - Literature reflection agent failed: cannot access local variable 'run_result' where it is not associated with a value
+2025-11-08 18:08:10,466 - INFO - --- LITERATURE REFLECTION AGENT ---
+2025-11-08 18:08:11,866 - INFO - Tool: Reflecting on 10 articles with Gemini Flash...
+2025-11-08 18:08:26,127 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-08 18:08:26,134 - INFO - Tool: Reflection complete. Validated 10 decisions.
+2025-11-08 18:08:26,134 - INFO - 
+  DOI:            10.1261/rna.078660.120
+  Classification: true
+  Reasoning:      The abstract explicitly states that the enzyme Tpt1 is 'considered a potential antifungal drug target' and characterizes its function in Coccidioides immitis and Aspergillus fumigatus.
 
-2025-11-08 17:22:35,383 - INFO - Initial State: query='drug targets for Coccidioides'
+2025-11-08 18:08:26,134 - INFO - 
+  DOI:            10.1371/journal.ppat.1004632
+  Classification: unclear
+  Reasoning:      This is a review article highlighting the urgent need for new antifungal drug targets and mentioning relevant fungal pathogens, but it does not identify or characterize a specific new target.
+
+2025-11-08 18:08:26,134 - INFO - 
+  DOI:            10.1128/msystems.01404-21
+  Classification: true
+  Reasoning:      The abstract explicitly identifies a 'WOPR family transcription factor' (CIMG_02671) as being 'critical for pathogenic growth' in Coccidioides immitis and refers to the findings as providing 'promising drug targets.'
+
+2025-11-08 18:08:26,135 - INFO - 
+  DOI:            10.3390/jof8101064
+  Classification: true
+  Reasoning:      The abstract explicitly states that 'Transporters... are considered as potential drug targets' and then proceeds to characterize a large repertoire of these transporters in Coccidioides immitis and Coccidioides posadasii.
+
+2025-11-08 18:08:26,135 - INFO - 
+  DOI:            10.1261/rna.057455.116
+  Classification: true
+  Reasoning:      The abstract explicitly identifies tRNA ligases (Trl1) as 'promising targets for antifungal drug discovery' and characterizes them in Coccidioides immitis and Aspergillus fumigatus.
+
+2025-11-08 18:08:26,135 - INFO - 
+  DOI:            10.3390/jof2010006
+  Classification: true
+  Reasoning:      The abstract explicitly states its goal is to identify 'fungi-typical proteins that do not share significant homology with human proteins' that are 'of interest to the development of vaccines or drug targets' and highlights specific proteins (e.g., 1,3-\u03b2-glucanosyltransferases, Crf1, Gel1) from Aspergillus and Coccidioides species.
+
+2025-11-08 18:08:26,136 - INFO - 
+  DOI:            10.54453/tmcd.2022.36024
+  Classification: false
+  Reasoning:      This is a review of an existing antifungal drug (Oteseconazole) and its known target (fungal CYP51), rather than the discovery or characterization of a new potential drug target in Coccidioides or Aspergillus.
+
+2025-11-08 18:08:26,136 - INFO - 
+  DOI:            10.1093/nar/gkab1077
+  Classification: true
+  Reasoning:      The abstract explicitly states that 'Self-splicing group II introns have emerged as promising drug targets' and identifies such introns in Coccidioides, demonstrating their small molecule targetability and concluding they have 'great promise as antifungal drug targets.'
+
+2025-11-08 18:08:26,136 - INFO - 
+  DOI:            10.1186/s12879-024-10143-3
+  Classification: false
+  Reasoning:      This is a review of an emerging antifungal drug (Olorofim) and its known target (dihydroorotate dehydrogenase, DHODH), rather than the discovery or characterization of a new potential drug target in Coccidioides or Aspergillus.
+
+2025-11-08 18:08:26,137 - INFO - 
+  DOI:            10.1038/s41588-024-01948-8
+  Classification: false
+  Reasoning:      This abstract is about drug resistance mechanisms in cancer therapies and does not relate to fungal drug, vaccine, or antifungal targets in Coccidioides or Aspergillus.
+
+2025-11-08 18:08:26,137 - INFO - RunUsage(input_tokens=3953, output_tokens=3420, details={'thoughts_tokens': 2579, 'text_prompt_tokens': 3953}, requests=1)
+2025-11-08 18:08:26,138 - INFO - Reflection complete. Relevant: 6. Unclear: 1. Discarded: 3 .
+
+2025-11-08 18:08:26,143 - INFO - Initial State: query='drug targets for Coccidioides'

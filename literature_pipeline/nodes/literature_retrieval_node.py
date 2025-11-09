@@ -1,5 +1,5 @@
 from ..schemas import PipelineState
-from ..tools.asta_literature_search import search_asta_mcp_tool
+from ..tools.literature_search import search_asta_mcp_tool
 import logging
 
 logger = logging.getLogger(__name__)
