@@ -1,12 +1,15 @@
 from ..schemas import PipelineState
 from ..tools.asta_literature_search import search_asta_mcp_tool
+import logging
+
+logger = logging.getLogger(__name__)
 
 def literature_retrieval_node(state: PipelineState) -> dict:
     """
     Reads the query from the state, calls the Asta tool, 
     and returns the new articles to be added to the state.
     """
-    print("--- LITERATURE EXTRACTION ---")
+    logger.info("--- LITERATURE EXTRACTION ---")
     query = state["original_query"]
     batch_size = state["search_batch_size"]
     
@@ -17,7 +20,7 @@ def literature_retrieval_node(state: PipelineState) -> dict:
             batch_size=batch_size
         )
         
-        print(f"Found {len(new_articles)} new articles.")
+        logger.info(f"Found {len(new_articles)} new articles.\n")
         
         # Return the dictionary of state keys to update
         return {
@@ -26,7 +29,7 @@ def literature_retrieval_node(state: PipelineState) -> dict:
         
     except Exception as e:
         # Handle tool failure (e.g., API error, validation error)
-        print(f"Literature agent failed: {e}")
+        logger.info(f"Literature agent failed: {e}\n")
         return {
             "articles_to_process": [],
         }

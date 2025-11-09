@@ -1,9 +1,22 @@
 import pprint
+import logging
 from .graph import create_graph
 from .schemas import PipelineState
 
+REPORT_FILE = "pipeline_run_report.txt"
+
 def run():
     """Initializes and runs the LangGraph workflow."""
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        filename=REPORT_FILE,
+        filemode="w"
+    )
+    logging.getLogger().addHandler(logging.StreamHandler())
+    logging.info("--- Starting New Pipeline Run ---\n")
+
     app = create_graph()
 
     initial_input: PipelineState = {
@@ -20,6 +33,8 @@ def run():
         "total_articles_fetched": 0
     }
 
+    logging.info(f"Initial State: query='{initial_input['original_query']}'\n")
+
     print("Graph: Invoking with initial state...")
     
     for event in app.stream(initial_input):
@@ -27,6 +42,8 @@ def run():
         print("---")
 
     print("\nGraph execution complete.")
+
+    logging.info(f"Initial State: query='{initial_input['original_query']}'")
 
 if __name__ == "__main__":
     run()

@@ -1,0 +1,21 @@
+2025-11-08 17:19:53,148 - INFO - --- Starting New Pipeline Run ---
+
+2025-11-08 17:19:53,152 - INFO - Initial State: query='drug targets for Coccidioides'
+
+2025-11-08 17:19:53,287 - INFO - --- LITERATURE EXTRACTION ---
+2025-11-08 17:19:53,287 - INFO - Tool: Calling Semantic Scholar API. Query: drug targets for Coccidioides... Size: 10
+2025-11-08 17:19:54,033 - INFO - Tool: Response status: 200
+2025-11-08 17:19:54,034 - INFO - Tool: Success. Found 10 articles.
+
+2025-11-08 17:19:54,035 - INFO - Found 10 new articles.
+
+2025-11-08 17:19:54,041 - INFO - --- LITERATURE REFLECTION AGENT ---
+2025-11-08 17:19:54,203 - INFO - Tool: Reflecting on 10 articles with Gemini Flash...
+2025-11-08 17:22:35,369 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2025-11-08 17:22:35,379 - INFO - Tool Error: PydanticAI reflection failed. Invalid response from OpenAI chat completions endpoint: 1 validation error for ChatCompletion
+choices.0.message.role
+  Input should be 'assistant' [type=literal_error, input_value='', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/literal_error
+2025-11-08 17:22:35,380 - INFO - Literature reflection agent failed: cannot access local variable 'run_result' where it is not associated with a value
+
+2025-11-08 17:22:35,383 - INFO - Initial State: query='drug targets for Coccidioides'

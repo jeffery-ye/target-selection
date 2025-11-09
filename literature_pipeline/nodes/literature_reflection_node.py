@@ -1,6 +1,9 @@
 from typing import List, Dict
 from ..schemas import PipelineState, Article, ArticleReflection, ReflectionBatch
 from ..tools.literature_reflection import article_reflection_tool
+import logging
+
+logger = logging.getLogger(__name__)
 
 def literature_reflection_node(state: PipelineState) -> Dict:
     """
@@ -9,12 +12,12 @@ def literature_reflection_node(state: PipelineState) -> Dict:
     Filters the article list to only include those classified as 'true'.
     """
 
-    print("--- LITERATURE REFLECTION AGENT ---")
+    logger.info("--- LITERATURE REFLECTION AGENT ---")
     
     articles_to_reflect = state["articles_to_process"]
     
     if not articles_to_reflect:
-        print("Reflection: No new articles to process.")
+        logger.info("Reflection: No new articles to process.")
         return {"articles_to_process": []}
 
     try:
@@ -48,7 +51,7 @@ def literature_reflection_node(state: PipelineState) -> Dict:
             else:
                 discarded += 1
         
-        print(f"Reflection complete. Relevant: {len(articles_for_ner)}. Unclear: {len(articles_for_full_text)}. {discarded} articles discarded.")
+        logger.info(f"Reflection complete. Relevant: {len(articles_for_ner)}. Unclear: {len(articles_for_full_text)}. Discarded: {discarded} .\n")
         
         # Return the state update
         # Only 'true' articles proceed to the next node (NER)
@@ -58,7 +61,7 @@ def literature_reflection_node(state: PipelineState) -> Dict:
         }
 
     except Exception as e:
-        print(f"Literature reflection agent failed: {e}")
+        logger.info(f"Literature reflection agent failed: {e}\n")
         return {
             "articles_to_process": [],
         }

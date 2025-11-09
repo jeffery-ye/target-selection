@@ -4,7 +4,9 @@ from typing import List
 from pydantic import TypeAdapter, ValidationError
 from ..schemas import Article
 from dotenv import load_dotenv
+import logging
 
+logger = logging.getLogger(__name__)
 load_dotenv()
 
 SEMANTIC_SCHOLAR_API_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
@@ -18,11 +20,11 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
     """
     Part of the literature_retrieval_node: This tool uses Semantic Scholar
     to retrieve n number of papers, returning a list of articles.
-    
+
     Searches papers using the Semantic Scholar API directly.
     """
     if not SEMANTIC_SCHOLAR_API_KEY:
-        print("Warning: SEMANTIC_SCHOLAR_API_KEY not found. Using rate-limited public API.")
+        logger.info("Warning: SEMANTIC_SCHOLAR_API_KEY not found. Using rate-limited public API.")
     
     headers = {
         "Accept": "application/json"
@@ -37,7 +39,7 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         "fields": ARTICLE_FIELDS
     }
     
-    print(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")
+    logger.info(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")
     
     try:
         response = requests.get(
@@ -47,14 +49,14 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
             timeout=30
         )
         
-        print(f"Tool: Response status: {response.status_code}")
+        logger.info(f"Tool: Response status: {response.status_code}")
         response.raise_for_status()
         
         response_data = response.json()
         raw_results = response_data.get("data", [])
         
         if not raw_results:
-            print("Tool: Semantic Scholar returned no results.")
+            logger.info("Tool: Semantic Scholar returned no results.")
             return []
         
         # Translation layer - map Semantic Scholar fields to your Article model
@@ -80,20 +82,20 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         
         validated_articles = ArticleListAdapter.validate_python(transformed_results)
         
-        print(f"Tool: Success. Found {len(validated_articles)} articles.")
+        logger.info(f"Tool: Success. Found {len(validated_articles)} articles.\n")
         return validated_articles
         
     except requests.exceptions.HTTPError as e:
-        print(f"Tool Error: HTTP {response.status_code} - {e}")
-        print(f"Tool Error: Response body: {response.text}")
+        logger.info(f"Tool Error: HTTP {response.status_code} - {e}")
+        logger.info(f"Tool Error: Response body: {response.text}")
         raise
     except requests.exceptions.RequestException as e:
-        print(f"Tool Error: HTTP request failed. {e}")
+        logger.info(f"Tool Error: HTTP request failed. {e}")
         raise
     except ValidationError as e:
-        print(f"Tool Error: Pydantic validation failed. {e}")
-        print(f"Tool Error: Failed records: {transformed_results}")
+        logger.info(f"Tool Error: Pydantic validation failed. {e}")
+        logger.info(f"Tool Error: Failed records: {transformed_results}")
         raise
     except Exception as e:
-        print(f"Tool Error: Data processing failed. {e}")
+        logger.info(f"Tool Error: Data processing failed. {e}")
         raise
