@@ -5,5 +5,5 @@ pydantic
 pydantic-ai
 python-dotenv
 requests
-langchain-langsmith
+langsmith
 biopython

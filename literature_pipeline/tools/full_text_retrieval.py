@@ -11,6 +11,11 @@ Entrez.email = "jeffery.ye@seattlechildrens.org"
 
 # downloads pubmed central paper using Entrez
 def retrieve_article(pmid, retries=3, delay=1):
+    """
+    Part of literature_ner_node
+
+    This tool retrieves the full text of an article in xml form if it exists, None if it doesn't.
+    """
     link_handle = Entrez.elink(dbfrom="pubmed", db="pmc", id=pmid, linkname="pubmed_pmc_refs")
     link_result = Entrez.read(link_handle)
     link_handle.close()

@@ -1,9 +1,16 @@
 import pprint
 import logging
+import warnings
 from .graph import create_graph
 from .schemas import PipelineState
 
 REPORT_FILE = "pipeline_run_report.txt"
+
+# This is just really annoying -- langgraph, please fix your Pydantic imports
+warnings.filterwarnings(
+    "ignore",
+    message="Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.*"
+)
 
 def run():
     """Initializes and runs the LangGraph workflow."""

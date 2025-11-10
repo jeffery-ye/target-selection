@@ -26,12 +26,18 @@ class ReflectionBatch(BaseModel):
     """Data schema for storing article relevancy"""
     reflections: List[ArticleReflection]
 
+
+# --- NER AGENT ---
 class ProteinCandidate(BaseModel):
     """Schema for an extracted protein entity."""
     protein_name: str = Field(..., description="The name of the protein, e.g., 'Cyp51'")
     species: str = Field(..., description="The source species, e.g., 'Coccidioides immitis'")
     accession_id: Optional[str] = Field(None, description="UniProt ID, if found in the paper.")
-    source_pmcid: str = Field(..., description="PMCID of the paper it was found in.")
+    source_doi: Optional[str] = Field(..., description="DOI of the paper it was found in.")
+
+class NerBatch(BaseModel):
+    """A batch of protein candidates returned by the NER agent."""
+    protein_candidates: List[ProteinCandidate]
 
 class PipelineState(TypedDict):
     """The complete state of our protein target pipeline."""

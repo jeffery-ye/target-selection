@@ -16,6 +16,8 @@ if not os.getenv("GOOGLE_API_KEY"):
 
 def article_reflection_tool(articles: List[Article], requirements: str) -> ReflectionBatch:
     """
+    Part of literature_reflection_node
+    
     Uses an LLM to reflect on a list of article abstracts.
     
     Classifies each article as 'true', 'false', or 'unclear' based on
