@@ -5,9 +5,11 @@ from pydantic import TypeAdapter, ValidationError
 from ..schemas import Article
 from dotenv import load_dotenv
 import logging
+import datetime
 
 logger = logging.getLogger(__name__)
 load_dotenv()
+current_year = datetime.datetime.now().year
 
 SEMANTIC_SCHOLAR_API_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
 SEMANTIC_SCHOLAR_API_KEY = os.getenv("ASTA_API_KEY")  
@@ -36,7 +38,8 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
     params = {
         "query": query,
         "limit": batch_size,
-        "fields": ARTICLE_FIELDS
+        "fields": ARTICLE_FIELDS,
+        "year": f"2021:{current_year}"
     }
     
     logger.info(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")

@@ -14,7 +14,7 @@ if "GOOGLE_API_KEY" not in os.environ:
     os.environ["GOOGLE_API_KEY"] = os.getenv("GEMINI_API_KEY", "")
 
 if not os.getenv("GOOGLE_API_KEY"):
-    logger.error("Error: GOOGLE_API_KEY or GEMINI_API_KEY not found in environment.")
+    logger.error("Error: GOOGLE_API_KEY not found in environment.")
 
 def extract_proteins_tool(text_to_scan: str) -> NerBatch:
     """
@@ -50,8 +50,7 @@ def extract_proteins_tool(text_to_scan: str) -> NerBatch:
 
     run_result: AgentRunResult = None
     try:
-        run_result = agent.run_sync(f"Here is the text to analyze: {text_to_scan}")
-        
+        run_result = agent.run_sync(f"Here is t    
         result: NerBatch = run_result.output
         
         if not result or not result.protein_candidates:

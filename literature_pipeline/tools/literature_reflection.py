@@ -17,7 +17,7 @@ if not os.getenv("GOOGLE_API_KEY"):
 def article_reflection_tool(articles: List[Article], requirements: str) -> ReflectionBatch:
     """
     Part of literature_reflection_node
-    
+
     Uses an LLM to reflect on a list of article abstracts.
     
     Classifies each article as 'true', 'false', or 'unclear' based on
@@ -48,7 +48,7 @@ def article_reflection_tool(articles: List[Article], requirements: str) -> Refle
         instructions=(f"""
             Review the following scientific abstracts based on this requirement: '{requirements}'
 
-            For each article, classify its potential to contain a drug target:
+            For each article, classify its potential to contain a drug target for Coccidioides, or for a related:
             - 'true': The abstract strongly suggests it discusses a specific drug target or targets.
             - 'false': The abstract is clearly irrelevant (e.g., wrong topic, review paper, methods paper).
             - 'unclear': The abstract is relevant but doesn't explicitly mention a target; it might be in the full text.
