@@ -4,27 +4,44 @@ import requests
 import time
 from Bio import Entrez
 import urllib.error
+import logging
+
+logger = logging.getLogger(__name__)
+Entrez.email = "jeffery.ye@seattlechildrens.org"
 
 # downloads pubmed central paper using Entrez
-def entrez_retrieval(self, pmc_id, retries=3, delay=1):
+def retrieve_article(pmid, retries=3, delay=1):
+    link_handle = Entrez.elink(dbfrom="pubmed", db="pmc", id=pmid, linkname="pubmed_pmc_refs")
+    link_result = Entrez.read(link_handle)
+    link_handle.close()
+    
+    if not link_result[0]["LinkSetDb"]:
+        logger.info(f"Error: No PMCID Found for {pmid}.")
+        return
+        
+    pmcid = link_result[0]["LinkSetDb"][0]["Link"][0]["Id"]
+    
     for attempt in range(retries):
         try:
-            handle = Entrez.efetch(db="pmc", id=pmc_id, retmode="xml")
-            data = handle.read().decode('utf-8')
-            return data
+            logger.info(f"Tool: Found PMCID {pmcid}. Fetching full text...")
+            fetch_handle = Entrez.efetch(db="pmc", id=pmcid, rettype="xml", retmode="text")
+            data = fetch_handle.read()
+            fetch_handle.close()
+
+            return parse_article(data)
         except urllib.error.HTTPError as e:
             if e.code == 400:
-                print(f"HTTP 400 for {pmc_id}, attempt {attempt+1}/{retries}")
+                logger.error(f"HTTP 400 for {pmcid}, attempt {attempt+1}/{retries}")
                 time.sleep(delay)
             else:
                 raise
         except Exception as e:
-            print(f"Unexpected error for {pmc_id}: {e}")
+            logger.error(f"Unexpected error for {pmcid}: {e}")
             time.sleep(delay)
-    print(f"Failed to retrieve {pmc_id} after {retries} attempts.")
+    logger.info(f"Failed to retrieve {pmcid} after {retries} attempts.")
     return ""
 
-def parse_article(self, xml_article):
+def parse_article(xml_article):
     tree = ET.ElementTree(ET.fromstring(xml_article))
     root = tree.getroot()
 
@@ -79,7 +96,7 @@ def parse_article(self, xml_article):
                 if p_text:
                     text_segments.append(p_text)
 
-    if text_segments[0]:
+    if text_segments:
         full_text = "\n".join(segment for segment in text_segments if segment)
     else:
         full_text = 'N/A'

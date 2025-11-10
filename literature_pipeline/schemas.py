@@ -31,7 +31,7 @@ class ProteinCandidate(BaseModel):
     protein_name: str = Field(..., description="The name of the protein, e.g., 'Cyp51'")
     species: str = Field(..., description="The source species, e.g., 'Coccidioides immitis'")
     accession_id: Optional[str] = Field(None, description="UniProt ID, if found in the paper.")
-    source_doi: str = Field(..., description="DOI of the paper it was found in.")
+    source_pmcid: str = Field(..., description="PMCID of the paper it was found in.")
 
 class PipelineState(TypedDict):
     """The complete state of our protein target pipeline."""
