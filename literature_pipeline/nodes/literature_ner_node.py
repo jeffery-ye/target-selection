@@ -35,6 +35,10 @@ def ner_agent_node(state: PipelineState) -> Dict:
                     if fetched_data.get('methods'):
                         text_to_scan = fetched_data['methods']
                         source_doc = "methods section"
+
+                    else:
+                        text_to_scan = fetched_data
+                        source_doc = "full-text article"
             except Exception as e:
                 logger.error(f"NER Node: Entrez fetch failed for PMID {article.pmid}. {e}\n")
         
@@ -56,6 +60,17 @@ def ner_agent_node(state: PipelineState) -> Dict:
             
         except Exception as e:
             logger.error(f"NER Node: Failed to extract proteins for {article.doi}. {e}\n")
+
+    for candidate in all_found_candidates:
+        # Build a structured, multi-line string for the log
+        log_entry = (
+            f"\n  Protein Name:    {candidate.protein_name}\n"
+            f"  Species:         {candidate.species}\n"
+            f"  Accession ID:    {candidate.accession_id}\n"
+            f"  Source DOI       {candidate.source_doi}"
+        )
+        logger.info(log_entry + "\n")
+
 
     logger.info(f"NER Node: Finished. Total candidates found: {len(all_found_candidates)}\n")
     
