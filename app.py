@@ -209,7 +209,7 @@ def submit_job():
     job_id = str(uuid.uuid4())
     
     logger.info(f"[{job_id}] New job submitted: {query}")
-
+    
     initial_state: PipelineState = {
         "original_query": query,
         "target_protein_count": 5,
