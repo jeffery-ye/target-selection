@@ -47,6 +47,7 @@ class PipelineState(TypedDict):
     
     articles_to_process: List[Article]
     article_status: List[Article]
+    reflection_results: List[ArticleReflection]
 
     unclear_articles: List[Article]
     confirmed_articles: List[Article]

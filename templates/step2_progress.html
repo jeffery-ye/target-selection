@@ -83,7 +83,7 @@
                 
                 // Check for completion message
                 if (data.message.includes('PIPELINE COMPLETE')) {
-                    statusMessage.innerHTML = '✅ Pipeline complete!';
+                    statusMessage.innerHTML = 'Pipeline complete!';
                     statusMessage.style.color = 'green';
                     progressBar.removeAttribute('indeterminate');
                     progressBar.value = 100;

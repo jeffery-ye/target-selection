@@ -1,5 +1,4 @@
 import logging
-import pprint
 import threading
 import uuid
 import warnings
@@ -14,7 +13,7 @@ from literature_pipeline.schemas import PipelineState
 # --- Logging ---
 REPORT_FILE = "pipeline_run_report.txt"
 logging.basicConfig(
-    level=logging.DEBUG,  # Changed to DEBUG for more verbose output
+    level=logging.INFO,  # Set to INFO for production
     format="%(asctime)s - %(levelname)s - %(message)s",
     filename=REPORT_FILE,
     filemode="w"
@@ -69,19 +68,40 @@ def format_event_for_display(event: dict) -> str:
         elif node_name == "literature_reflection":
             confirmed = node_data.get("confirmed_articles", [])
             unclear = node_data.get("unclear_articles", [])
+            reflections = node_data.get("reflection_results", [])
             
+            reflection_map = {ref.doi: ref for ref in reflections}
+            
+            all_processed_articles = confirmed + unclear
+
             messages.append(f"\n{'='*60}")
             messages.append(f"🔍 LITERATURE REFLECTION")
             messages.append(f"{'='*60}")
-            messages.append(f"✅ Relevant articles: {len(confirmed)}")
-            messages.append(f"❓ Unclear articles: {len(unclear)}")
+            messages.append(f"Processed {len(all_processed_articles)} articles:")
+            messages.append(f"  • ✅ Relevant: {len(confirmed)}")
+            messages.append(f"  • ❓ Unclear: {len(unclear)}")
+            messages.append(f"  • ❌ Discarded: {len(reflections) - len(all_processed_articles)}")
             
-            if confirmed:
-                messages.append("\nRelevant articles:")
-                for article in confirmed:
-                    title = article.title[:60]
-                    messages.append(f"  • {title}{'...' if len(article.title) > 60 else ''}")
-            messages.append("")
+            if all_processed_articles:
+                messages.append("\n--- Article Details ---")
+            
+            for article in all_processed_articles:
+                reflection = reflection_map.get(article.doi)
+                
+                if reflection:
+                    classification = reflection.classification.upper()
+                    reasoning = reflection.reasoning
+                else:
+                    classification = "N/A"
+                    reasoning = "N/A (Error in lookup)"
+
+                title = article.title[:70]
+                messages.append(f"\nTitle: {title}{'...' if len(article.title) > 70 else ''}")
+                messages.append(f"  • DOI: {article.doi}")
+                messages.append(f"  • Classification: {classification}")
+                messages.append(f"  • Reasoning: {reasoning}")
+            
+            messages.append("\n")
         
         elif node_name == "ner_agent":
             candidates = node_data.get("protein_candidates", [])
@@ -107,13 +127,7 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
     Runs the full graph in a background thread.
     Publishes SSE events for each step and the final result.
     """
-    print(f"\n{'='*80}")
-    print(f"DEBUG: Worker thread started for job {job_id}")
-    print(f"{'='*80}\n")
-    
     with app.app_context():
-        print(f"DEBUG: Inside app context for job {job_id}")
-        
         if not graph:
             logger.error(f"[{job_id}] Graph is not compiled. Worker cannot start.")
             sse.publish({"error": "Graph not compiled"}, channel=job_id)
@@ -121,50 +135,34 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
 
         logger.info(f"[{job_id}] Worker started for query: {initial_state['original_query']}")
         
-        # Test SSE connection immediately
         try:
-            print(f"DEBUG: Testing SSE publish for job {job_id}")
             sse.publish({"message": "🚀 Pipeline started..."}, channel=job_id)
-            print(f"DEBUG: SSE test publish successful for job {job_id}")
         except Exception as e:
-            print(f"DEBUG: SSE test publish FAILED for job {job_id}: {e}")
             logger.error(f"[{job_id}] SSE publish test failed: {e}", exc_info=True)
 
         try:
             final_state = None
-            event_count = 0
-            
-            print(f"DEBUG: Starting graph.stream() for job {job_id}")
             
             # Stream events for real-time progress updates
             for event in graph.stream(initial_state):
-                event_count += 1
-                print(f"DEBUG: Received event #{event_count} for job {job_id}")
                 
                 # Format the event into readable text
                 formatted_message = format_event_for_display(event)
                 
                 # Publish the formatted message
                 try:
-                    print(f"DEBUG: Publishing event #{event_count} to SSE for job {job_id}")
                     sse.publish({"message": formatted_message}, channel=job_id)
-                    print(f"DEBUG: Event #{event_count} published successfully")
                 except Exception as e:
-                    print(f"DEBUG: Failed to publish event #{event_count}: {e}")
                     logger.error(f"[{job_id}] Failed to publish event: {e}", exc_info=True)
                 
                 # Capture the last state from the stream
                 for node_name, node_state in event.items():
-                    print(f"DEBUG: Processing node '{node_name}' from event #{event_count}")
                     if isinstance(node_state, dict):
                         if final_state is None:
                             final_state = node_state.copy()
                         else:
                             final_state.update(node_state)
 
-            print(f"DEBUG: Graph stream complete for job {job_id}. Total events: {event_count}")
-
-            # If we didn't capture a final state, use initial state
             if not final_state:
                 logger.warning(f"[{job_id}] No final state captured from stream")
                 final_state = initial_state
@@ -172,7 +170,6 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
             # Serialize Pydantic models to JSON-safe dicts
             candidates_list = []
             if final_state.get("protein_candidates"):
-                print(f"DEBUG: Processing {len(final_state['protein_candidates'])} candidates")
                 candidates_list = [
                     c.model_dump() if hasattr(c, 'model_dump') else c 
                     for c in final_state["protein_candidates"]
@@ -182,33 +179,23 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
 
             # Publish the final, structured results
             try:
-                print(f"DEBUG: Publishing final results for job {job_id}")
                 sse.publish({"results": candidates_list}, channel=job_id)
-                print(f"DEBUG: Final results published successfully")
             except Exception as e:
-                print(f"DEBUG: Failed to publish final results: {e}")
                 logger.error(f"[{job_id}] Failed to publish results: {e}", exc_info=True)
 
         except Exception as e:
-            print(f"DEBUG: Pipeline worker exception for job {job_id}: {e}")
             logger.error(f"[{job_id}] Pipeline worker failed: {e}", exc_info=True)
             try:
                 sse.publish({"error": str(e)}, channel=job_id)
-            except Exception as pub_error:
-                print(f"DEBUG: Failed to publish error: {pub_error}")
+            except Exception:
+                pass  # Failed to publish error
 
         finally:
             logger.info(f"[{job_id}] Worker finished.")
             try:
-                print(f"DEBUG: Publishing completion message for job {job_id}")
                 sse.publish({"message": "\n✅ PIPELINE COMPLETE"}, channel=job_id)
-                print(f"DEBUG: Completion message published")
-            except Exception as e:
-                print(f"DEBUG: Failed to publish completion message: {e}")
-            
-            print(f"\n{'='*80}")
-            print(f"DEBUG: Worker thread finished for job {job_id}")
-            print(f"{'='*80}\n")
+            except Exception:
+                pass  # Failed to publish completion
 
 @app.route("/")
 def index():
@@ -230,6 +217,7 @@ def submit_job():
         "articles_to_process": [],
         "confirmed_articles": [],
         "unclear_articles": [],
+        "reflection_results": [],
         "protein_candidates": [],
         "validated_uniprot_ids": [],
         "total_articles_fetched": 0
@@ -254,34 +242,10 @@ def progress_page():
     logger.info(f"[{job_id}] Progress page accessed")
     return render_template("step2_progress.html", job_id=job_id, query=query)
 
-# Debug endpoint to test Redis publishing
-@app.route("/test-redis/<job_id>")
-def test_redis(job_id):
-    """Test endpoint to verify Redis publishing works."""
-    try:
-        with app.app_context():
-            sse.publish({"message": "Test message from /test-redis endpoint"}, channel=job_id)
-        return jsonify({"status": "success", "message": "Test message published"})
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-# Debug endpoint to check Redis subscriptions
-@app.route("/debug-redis")
-def debug_redis():
-    """Debug endpoint to check Redis status."""
-    try:
-        info = {
-            "redis_url": app.config["SSE_REDIS_URL"],
-            "redis_ping": redis_client.ping() if redis_client else False,
-            "active_channels": redis_client.pubsub_channels() if redis_client else []
-        }
-        return jsonify(info)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 if __name__ == "__main__":
     logger.info("=" * 60)
-    logger.info("Starting Flask application with debug mode")
+    logger.info("Starting Flask application")
     logger.info(f"Redis URL: {app.config['SSE_REDIS_URL']}")
     logger.info("=" * 60)
-    app.run(debug=True, threaded=True)
+    # Set debug=False for production
+    app.run(debug=False, threaded=True)
