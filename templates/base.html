@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <title>Target Selection Pipeline</title>
+    <style>
+      body {
+        padding-top: 2rem;
+      }
+      article {
+        max-width: 800px;
+        margin: auto;
+      }
+      pre {
+        background-color: var(--pico-muted-background-color);
+        padding: 1rem;
+        border-radius: var(--pico-border-radius);
+        max-height: 400px;
+        overflow-y: auto;
+        font-size: 0.875rem;
+      }
+      table {
+        margin-top: 1rem;
+      }
+      #error-box {
+        background-color: var(--pico-invalid-background-color);
+        border: 1px solid var(--pico-invalid-border-color);
+        padding: 1rem;
+        border-radius: var(--pico-border-radius);
+        color: var(--pico-invalid-color);
+        display: none; 
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <article>
+        {% block content %}{% endblock %}
+      </article>
+    </main>
+  </body>
+</html>
