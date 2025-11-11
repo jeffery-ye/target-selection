@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <header>
+    <h2>Processing Pipeline</h2>
+    <p><strong>Query:</strong> {{ query }}</p>
+  </header>
+
+  <!-- Progress bar shows while running -->
+  <progress id="progress-bar" indeterminate></progress>
+  
+  <!-- Error box, hidden by default -->
+  <div id="error-box">
+    <strong>Pipeline Error:</strong>
+    <p id="error-message"></p>
+    <a href="/" role="button" class="secondary">Try again</a>
+  </div>
+
+  <!-- Final results table, hidden by default -->
+  <div id="results-container" style="display: none;">
+    <h3>Extracted Protein Candidates</h3>
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th>Protein Name</th>
+          <th>Species</th>
+          <th>Accession ID</th>
+          <th>Source DOI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+    <a href="/" role="button" class="secondary">Start New Query</a>
+  </div>
+  
+  <!-- Live log stream, visible during processing -->
+  <details id="log-details" open>
+    <summary>Live Pipeline Log</summary>
+    <pre id="log-output"></pre>
+  </details>
+
+  <!-- JavaScript to handle Server-Sent Events -->
+  <script>
+    const jobId = "{{ job_id }}";
+    const logDiv = document.getElementById('log');
+    const resultsDiv = document.getElementById('results');
+    const statusDiv = document.getElementById('status');
+
+    console.log(`Connecting to SSE stream for job: ${jobId}`);
+    const sseUrl = `/stream?channel=${jobId}`;
+    console.log(`SSE URL: ${sseUrl}`);
+
+    // Create EventSource connection
+    const eventSource = new EventSource(sseUrl);
+
+    console.log('EventSource created, readyState:', eventSource.readyState);
+
+    eventSource.onopen = function(event) {
+        console.log('SSE connection opened', event);
+        logDiv.textContent += '=== Connected to server ===\n';
+    };
+
+    eventSource.onmessage = function(event) {
+        console.log('SSE message received:', event.data);
+        
+        try {
+            const data = JSON.parse(event.data);
+            console.log('Parsed data:', data);
+            
+            if (data.message) {
+                logDiv.textContent += data.message + '\n';
+                logDiv.scrollTop = logDiv.scrollHeight;
+                
+                if (data.message.includes('PIPELINE COMPLETE')) {
+                    statusDiv.innerHTML = '<p style="color: green;">✅ Pipeline complete!</p>';
+                    eventSource.close();
+                }
+            }
+            
+            if (data.results) {
+                statusDiv.innerHTML = '<p style="color: green;">✅ Pipeline complete!</p>';
+                displayResults(data.results);
+                eventSource.close();
+            }
+            
+            if (data.error) {
+                statusDiv.innerHTML = '<p style="color: red;">❌ Pipeline Error:</p>';
+                resultsDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                eventSource.close();
+            }
+        } catch (e) {
+            console.error('Failed to parse SSE data:', e);
+            console.error('Raw data:', event.data);
+        }
+    };
+
+    eventSource.onerror = function(error) {
+        console.error('EventSource error:', error);
+        console.error('ReadyState:', eventSource.readyState);
+        logDiv.textContent += '\n--- Stream connection error. Stopping. ---\n';
+        statusDiv.innerHTML = '<p style="color: red;">❌ Pipeline Error:</p>';
+        resultsDiv.innerHTML = '<div class="error">Connection to server lost. Please try again.</div>';
+        eventSource.close();
+    };
+
+    // Log readyState changes
+    setInterval(() => {
+        console.log('EventSource readyState:', eventSource.readyState);
+    }, 2000);
+  </script>
+{% endblock %}
