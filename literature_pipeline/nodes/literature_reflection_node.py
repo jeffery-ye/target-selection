@@ -57,11 +57,13 @@ def literature_reflection_node(state: PipelineState) -> Dict:
         # Only 'true' articles proceed to the next node (NER)
         return {
             "confirmed_articles": articles_for_ner,
-            "unclear_articles": articles_for_full_text
+            "unclear_articles": articles_for_full_text,
+            "reflection_results": reflection_batch.reflections
         }
 
     except Exception as e:
         logger.info(f"Literature reflection agent failed: {e}\n")
         return {
             "articles_to_process": [],
+            "reflection_results": [] 
         }

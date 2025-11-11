@@ -14,7 +14,6 @@ from literature_pipeline.schemas import PipelineState
 # --- Logging ---
 REPORT_FILE = "pipeline_run_report.txt"
 logging.basicConfig(
-    level=logging.DEBUG,  # Changed to DEBUG for more verbose output
     format="%(asctime)s - %(levelname)s - %(message)s",
     filename=REPORT_FILE,
     filemode="w"
@@ -32,17 +31,17 @@ app.register_blueprint(sse, url_prefix='/stream')
 try:
     redis_client = redis.StrictRedis.from_url(app.config["SSE_REDIS_URL"])
     redis_client.ping()
-    logger.info("✓ Redis connection successful")
+    logger.info("Redis connection successful")
 except Exception as e:
-    logger.error(f"✗ Redis connection failed: {e}")
+    logger.error(f"Redis connection failed: {e}")
     redis_client = None
 
 # --- Compile graph once on startup ---
 try:
     graph = create_graph()
-    logger.info("✓ LangGraph compiled successfully.")
+    logger.info("LangGraph compiled successfully.")
 except Exception as e:
-    logger.error(f"✗ Failed to compile graph: {e}", exc_info=True)
+    logger.error(f"Failed to compile graph: {e}", exc_info=True)
     graph = None
 
 def format_event_for_display(event: dict) -> str:
@@ -55,7 +54,7 @@ def format_event_for_display(event: dict) -> str:
         if node_name == "literature_retrieval":
             articles = node_data.get("articles_to_process", [])
             messages.append(f"\n{'='*60}")
-            messages.append(f"📚 LITERATURE RETRIEVAL - Found {len(articles)} articles")
+            messages.append(f"LITERATURE RETRIEVAL - Found {len(articles)} articles")
             messages.append(f"{'='*60}")
             
             for i, article in enumerate(articles, 1):
@@ -69,25 +68,46 @@ def format_event_for_display(event: dict) -> str:
         elif node_name == "literature_reflection":
             confirmed = node_data.get("confirmed_articles", [])
             unclear = node_data.get("unclear_articles", [])
+            reflections = node_data.get("reflection_results", [])
             
+            reflection_map = {ref.doi: ref for ref in reflections}
+            
+            all_processed_articles = confirmed + unclear
+
             messages.append(f"\n{'='*60}")
-            messages.append(f"🔍 LITERATURE REFLECTION")
+            messages.append(f"LITERATURE REFLECTION")
             messages.append(f"{'='*60}")
-            messages.append(f"✅ Relevant articles: {len(confirmed)}")
-            messages.append(f"❓ Unclear articles: {len(unclear)}")
+            messages.append(f"Processed {len(all_processed_articles)} articles:")
+            messages.append(f"  • Relevant: {len(confirmed)}")
+            messages.append(f"  • Unclear: {len(unclear)}")
+            messages.append(f"  • Discarded: {len(reflections) - len(all_processed_articles)}")
             
-            if confirmed:
-                messages.append("\nRelevant articles:")
-                for article in confirmed:
-                    title = article.title[:60]
-                    messages.append(f"  • {title}{'...' if len(article.title) > 60 else ''}")
-            messages.append("")
+            if all_processed_articles:
+                messages.append("\n--- Article Details ---")
+            
+            for article in all_processed_articles:
+                reflection = reflection_map.get(article.doi)
+                
+                if reflection:
+                    classification = reflection.classification.upper()
+                    reasoning = reflection.reasoning
+                else:
+                    classification = "N/A"
+                    reasoning = "N/A (Error in lookup)"
+
+                title = article.title[:70]
+                messages.append(f"\nTitle: {title}{'...' if len(article.title) > 70 else ''}")
+                messages.append(f"  • DOI: {article.doi}")
+                messages.append(f"  • Classification: {classification}")
+                messages.append(f"  • Reasoning: {reasoning}")
+            
+            messages.append("\n")
         
         elif node_name == "ner_agent":
             candidates = node_data.get("protein_candidates", [])
             
             messages.append(f"\n{'='*60}")
-            messages.append(f"🧬 PROTEIN EXTRACTION - Found {len(candidates)} candidates")
+            messages.append(f"PROTEIN EXTRACTION - Found {len(candidates)} candidates")
             messages.append(f"{'='*60}")
             
             for i, candidate in enumerate(candidates, 1):
@@ -230,6 +250,7 @@ def submit_job():
         "articles_to_process": [],
         "confirmed_articles": [],
         "unclear_articles": [],
+        "reflection_results": [],
         "protein_candidates": [],
         "validated_uniprot_ids": [],
         "total_articles_fetched": 0
