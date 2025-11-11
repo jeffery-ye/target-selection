@@ -39,7 +39,7 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         "query": query,
         "limit": batch_size,
         "fields": ARTICLE_FIELDS,
-        "year": f"2021:{current_year}"
+        #"year": f"2021:{current_year}"
     }
     
     logger.info(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")

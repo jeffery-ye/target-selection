@@ -50,7 +50,7 @@ def extract_proteins_tool(text_to_scan: str) -> NerBatch:
 
     run_result: AgentRunResult = None
     try:
-        run_result = agent.run_sync(f"Here is t    
+        run_result = agent.run_sync(f"Here is the text: {text_to_scan}")
         result: NerBatch = run_result.output
         
         if not result or not result.protein_candidates:
