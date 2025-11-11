@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <header>
+    <h2>Target Selection Pipeline</h2>
+    <p>
+      Enter a natural language query to find potential drug targets
+      from scientific literature.
+    </p>
+  </header>
+  
+  <form action="/submit" method="POST">
+    <label for="query">Query</label>
+    <input
+      type="text"
+      id="query"
+      name="query"
+      placeholder="e.g., drug targets for Coccidioides"
+      required
+    >
+    <button type="submit">Start Pipeline</button>
+  </form>
+{% endblock %}
