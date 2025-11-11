@@ -30,11 +30,11 @@ def run():
         #"original_query": input(),
         "original_query": "drug targets for Coccidioides",
         "target_protein_count": 5,
-        "search_batch_size": 2,
+        "search_batch_size": 10,
         
-        "retrieved_articles": [],
-        "newly_found_articles": [],
         "articles_to_process": [],
+        "unclear_articles": [],
+        "confirmed_articles": [],
         "protein_candidates": [],
         "validated_uniprot_ids": [],
         "total_articles_fetched": 0

@@ -8,7 +8,7 @@ class Article(BaseModel):
     doi: str = Field(..., description="Digital Object Identifier.")
     pmid: Optional[str] = Field(None, description="PubMed ID.")
     title: str
-    abstract: str
+    abstract: Optional[str]
     is_open_access: bool = Field(..., description="Flag for open access full text.")
     full_text_url: Optional[HttpUrl] = Field(None, description="Link to full text if available.")
     relevance_score: float = Field(..., description="Asta MCP relevance score.")
