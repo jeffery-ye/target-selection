@@ -45,6 +45,63 @@ except Exception as e:
     logger.error(f"✗ Failed to compile graph: {e}", exc_info=True)
     graph = None
 
+def format_event_for_display(event: dict) -> str:
+    """
+    Converts a graph event dictionary into a human-readable log message.
+    """
+    messages = []
+    
+    for node_name, node_data in event.items():
+        if node_name == "literature_retrieval":
+            articles = node_data.get("articles_to_process", [])
+            messages.append(f"\n{'='*60}")
+            messages.append(f"📚 LITERATURE RETRIEVAL - Found {len(articles)} articles")
+            messages.append(f"{'='*60}")
+            
+            for i, article in enumerate(articles, 1):
+                messages.append(f"\n[Article {i}]")
+                messages.append(f"Title: {article.title[:80]}{'...' if len(article.title) > 80 else ''}")
+                messages.append(f"DOI: {article.doi}")
+                abstract = article.abstract[:200] if article.abstract else "N/A"
+                messages.append(f"Abstract: {abstract}{'...' if len(article.abstract or '') > 200 else ''}")
+                messages.append("")
+        
+        elif node_name == "literature_reflection":
+            confirmed = node_data.get("confirmed_articles", [])
+            unclear = node_data.get("unclear_articles", [])
+            
+            messages.append(f"\n{'='*60}")
+            messages.append(f"🔍 LITERATURE REFLECTION")
+            messages.append(f"{'='*60}")
+            messages.append(f"✅ Relevant articles: {len(confirmed)}")
+            messages.append(f"❓ Unclear articles: {len(unclear)}")
+            
+            if confirmed:
+                messages.append("\nRelevant articles:")
+                for article in confirmed:
+                    title = article.title[:60]
+                    messages.append(f"  • {title}{'...' if len(article.title) > 60 else ''}")
+            messages.append("")
+        
+        elif node_name == "ner_agent":
+            candidates = node_data.get("protein_candidates", [])
+            
+            messages.append(f"\n{'='*60}")
+            messages.append(f"🧬 PROTEIN EXTRACTION - Found {len(candidates)} candidates")
+            messages.append(f"{'='*60}")
+            
+            for i, candidate in enumerate(candidates, 1):
+                messages.append(f"\n[Candidate {i}]")
+                messages.append(f"Protein: {candidate.protein_name}")
+                messages.append(f"Species: {candidate.species}")
+                if candidate.accession_id:
+                    messages.append(f"Accession: {candidate.accession_id}")
+                messages.append(f"Source: {candidate.source_doi}")
+            messages.append("")
+    
+    return "\n".join(messages)
+
+
 def run_pipeline_worker(job_id: str, initial_state: PipelineState):
     """
     Runs the full graph in a background thread.
@@ -67,7 +124,7 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
         # Test SSE connection immediately
         try:
             print(f"DEBUG: Testing SSE publish for job {job_id}")
-            sse.publish({"message": "=== PIPELINE STARTED ==="}, channel=job_id)
+            sse.publish({"message": "🚀 Pipeline started..."}, channel=job_id)
             print(f"DEBUG: SSE test publish successful for job {job_id}")
         except Exception as e:
             print(f"DEBUG: SSE test publish FAILED for job {job_id}: {e}")
@@ -84,14 +141,13 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
                 event_count += 1
                 print(f"DEBUG: Received event #{event_count} for job {job_id}")
                 
-                # Convert event to string for logging
-                event_str = pprint.pformat(event)
-                logger.debug(f"[{job_id}] Event: {event_str[:150]}...")
+                # Format the event into readable text
+                formatted_message = format_event_for_display(event)
                 
-                # Publish each event as a message
+                # Publish the formatted message
                 try:
                     print(f"DEBUG: Publishing event #{event_count} to SSE for job {job_id}")
-                    sse.publish({"message": f"Event {event_count}: {event_str}"}, channel=job_id)
+                    sse.publish({"message": formatted_message}, channel=job_id)
                     print(f"DEBUG: Event #{event_count} published successfully")
                 except Exception as e:
                     print(f"DEBUG: Failed to publish event #{event_count}: {e}")
@@ -145,7 +201,7 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
             logger.info(f"[{job_id}] Worker finished.")
             try:
                 print(f"DEBUG: Publishing completion message for job {job_id}")
-                sse.publish({"message": "--- PIPELINE COMPLETE ---"}, channel=job_id)
+                sse.publish({"message": "\n✅ PIPELINE COMPLETE"}, channel=job_id)
                 print(f"DEBUG: Completion message published")
             except Exception as e:
                 print(f"DEBUG: Failed to publish completion message: {e}")
@@ -153,26 +209,6 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
             print(f"\n{'='*80}")
             print(f"DEBUG: Worker thread finished for job {job_id}")
             print(f"{'='*80}\n")
-
-
-def test_redis_connection():
-    """Test if Redis is accessible"""
-    try:
-        import redis
-        redis_client = redis.StrictRedis.from_url(app.config["SSE_REDIS_URL"])
-        redis_client.ping()
-        logger.info("✓ Redis connection successful")
-        return True
-    except Exception as e:
-        logger.error(f"✗ Redis connection failed: {e}")
-        return False
-
-# Add this after creating the app and before compiling the graph:
-if __name__ == "__main__":
-    logger.info("Testing Redis connection...")
-    if not test_redis_connection():
-        logger.error("WARNING: Redis is not running! SSE will not work.")
-        logger.error("Please start Redis with: redis-server")
 
 @app.route("/")
 def index():
