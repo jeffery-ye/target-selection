@@ -1,0 +1,3 @@
+[submodule "agent-baselines"]
+	path = agent-baselines
+	url = https://github.com/allenai/agent-baselines.git

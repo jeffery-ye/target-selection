@@ -1,10 +1,14 @@
 import logging
 import threading
 import uuid
-import warnings
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sse import sse
 import redis
+import sys
+import os
+
+# Asta
+sys.path.append(os.path.join(os.path.dirname(__file__), "agent-baselines"))
 
 # --- Import from existing pipeline ---
 from literature_pipeline.graph import create_graph

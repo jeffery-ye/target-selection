@@ -9,86 +9,83 @@ import datetime
 
 logger = logging.getLogger(__name__)
 load_dotenv()
-current_year = datetime.datetime.now().year
 
-SEMANTIC_SCHOLAR_API_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
-SEMANTIC_SCHOLAR_API_KEY = os.getenv("ASTA_API_KEY")  
-
-ARTICLE_FIELDS = "paperId,externalIds,title,abstract,isOpenAccess,url,citationCount"
+# URL for the locally running Asta Paper Finder service
+ASTA_PAPER_FINDER_URL = "http://localhost:8000/api/2/rounds"
 
 ArticleListAdapter = TypeAdapter(List[Article])
 
 def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
     """
-    Part of the literature_retrieval_node: This tool uses Semantic Scholar
-    to retrieve n number of papers, returning a list of articles.
+    Part of the literature_retrieval_node: This tool uses the
+    Asta Paper Finder agent service to retrieve n number of papers.
 
-    Searches papers using the Semantic Scholar API directly.
+    Assumes the Asta Paper Finder service is running at ASTA_PAPER_FINDER_URL.
     """
-    if not SEMANTIC_SCHOLAR_API_KEY:
-        logger.info("Warning: SEMANTIC_SCHOLAR_API_KEY not found. Using rate-limited public API.")
     
     headers = {
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Content-Type": "application/json"
     }
     
-    if SEMANTIC_SCHOLAR_API_KEY:
-        headers["x-api-key"] = SEMANTIC_SCHOLAR_API_KEY
-    
-    params = {
-        "query": query,
-        "limit": batch_size,
-        "fields": ARTICLE_FIELDS,
-        #"year": f"2021:{current_year}"
+    payload = {
+        "paper_description": query,
+        "operation_mode": "fast", 
     }
     
-    logger.info(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")
+    logger.info(f"Tool: Calling local Asta Paper Finder service. Query: {query[:50]}...")
     
     try:
-        response = requests.get(
-            SEMANTIC_SCHOLAR_API_URL,
+        # Use a long timeout. 'fast' mode can take ~30-60 seconds.
+        response = requests.post(
+            ASTA_PAPER_FINDER_URL,
             headers=headers,
-            params=params,
-            timeout=30,
-            verify=False
+            json=payload,
+            timeout=120 
         )
         
         logger.info(f"Tool: Response status: {response.status_code}")
         response.raise_for_status()
         
         response_data = response.json()
-        raw_results = response_data.get("data", [])
+        
+        # --- Corrected Key ---
+        # The list of papers is at response_data['doc_collection']['documents']
+        doc_collection = response_data.get("doc_collection", {})
+        raw_results = doc_collection.get("documents", [])
         
         if not raw_results:
-            logger.info("Tool: Semantic Scholar returned no results.")
+            logger.info("Tool: Asta Paper Finder returned no 'documents' or 'documents' list was empty.")
             return []
         
-        # Translation layer - map Semantic Scholar fields to your Article model
+        # --- Corrected TRANSFORMATION LAYER ---
+        # Map the Asta agent's fields to our internal Article schema.
         transformed_results = []
         for r in raw_results:
-            external_ids = r.get("externalIds") or {}
             
-            paper_id = r.get("paperId", "")
-            paper_url = r.get("url") or f"https://www.semanticscholar.org/paper/{paper_id}"
-            
-            citation_count = r.get("citationCount", 0)
-            relevance_score = min(citation_count / 100.0, 1.0) if citation_count else 0.0
-            
+            # Use corpus_id as the unique ID for 'doi' field
+            unique_id = r.get("corpus_id")
+            if not unique_id:
+                # Fallback if corpus_id is missing for some reason
+                unique_id = r.get("url", "N/A")
+
             transformed_results.append({
-                "doi": external_ids.get("DOI"),
-                "pmid": external_ids.get("PubMed"),
+                "doi": unique_id,
+                "pmid": None, # Not present in Asta response
                 "title": r.get("title"),
                 "abstract": r.get("abstract"),
-                "is_open_access": r.get("isOpenAccess"),
-                "full_text_url": paper_url,
-                "relevance_score": relevance_score
+                "is_open_access": False, # Not present in Asta response
+                "full_text_url": r.get("url"),
+                "relevance_score": r.get("relevance_judgement", {}).get("relevance_score", 0.0)
             })
         
+        # Limit results to batch_size (handles your "limit to 10" request)
+        transformed_results = transformed_results[:batch_size]
+
         validated_articles = ArticleListAdapter.validate_python(transformed_results)
         
-        logger.info(f"Tool: Success. Found {len(validated_articles)} articles.\n")
+        logger.info(f"Tool: Success. Validated {len(validated_articles)} articles.\n")
         for article in validated_articles:
-            # Build a structured, multi-line string for the log
             log_entry = (
                 f"\n  DOI:           {article.doi}\n"
                 f"  Title:         {article.title}\n"
@@ -99,16 +96,16 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         return validated_articles
         
     except requests.exceptions.HTTPError as e:
-        logger.info(f"Tool Error: HTTP {response.status_code} - {e}")
-        logger.info(f"Tool Error: Response body: {response.text}")
+        logger.error(f"Tool Error: HTTP {response.status_code} - {e}")
+        logger.error(f"Tool Error: Response body: {response.text}")
         raise
     except requests.exceptions.RequestException as e:
-        logger.info(f"Tool Error: HTTP request failed. {e}")
+        logger.error(f"Tool Error: HTTP request to Asta service failed. {e}")
         raise
     except ValidationError as e:
-        logger.info(f"Tool Error: Pydantic validation failed. {e}")
-        logger.info(f"Tool Error: Failed records: {transformed_results}")
+        logger.error(f"Tool Error: Pydantic validation failed on Asta output. {e}")
+        logger.error(f"Tool Error: Failed records: {transformed_results}")
         raise
     except Exception as e:
-        logger.info(f"Tool Error: Data processing failed. {e}")
+        logger.error(f"Tool Error: Data processing failed. {e}", exc_info=True)
         raise
