@@ -35,17 +35,17 @@ app.register_blueprint(sse, url_prefix='/stream')
 try:
     redis_client = redis.StrictRedis.from_url(app.config["SSE_REDIS_URL"])
     redis_client.ping()
-    logger.info("✓ Redis connection successful")
+    logger.info("Redis connection successful")
 except Exception as e:
-    logger.error(f"✗ Redis connection failed: {e}")
+    logger.error(f"Redis connection failed: {e}")
     redis_client = None
 
 # --- Compile graph once on startup ---
 try:
     graph = create_graph()
-    logger.info("✓ LangGraph compiled successfully.")
+    logger.info("LangGraph compiled successfully.")
 except Exception as e:
-    logger.error(f"✗ Failed to compile graph: {e}", exc_info=True)
+    logger.error(f"Failed to compile graph: {e}", exc_info=True)
     graph = None
 
 def format_event_for_display(event: dict) -> str:
@@ -53,12 +53,13 @@ def format_event_for_display(event: dict) -> str:
     Converts a graph event dictionary into a human-readable log message.
     """
     messages = []
-    
+    messages.append(f"STARTING ASTA LITERATURE SEARCH")
+
     for node_name, node_data in event.items():
         if node_name == "literature_retrieval":
             articles = node_data.get("articles_to_process", [])
             messages.append(f"\n{'='*60}")
-            messages.append(f"📚 LITERATURE RETRIEVAL - Found {len(articles)} articles")
+            messages.append(f"LITERATURE RETRIEVAL - Found {len(articles)} articles")
             messages.append(f"{'='*60}")
             
             for i, article in enumerate(articles, 1):
@@ -79,12 +80,12 @@ def format_event_for_display(event: dict) -> str:
             all_processed_articles = confirmed + unclear
 
             messages.append(f"\n{'='*60}")
-            messages.append(f"🔍 LITERATURE REFLECTION")
+            messages.append(f"LITERATURE REFLECTION")
             messages.append(f"{'='*60}")
             messages.append(f"Processed {len(all_processed_articles)} articles:")
-            messages.append(f"  • ✅ Relevant: {len(confirmed)}")
-            messages.append(f"  • ❓ Unclear: {len(unclear)}")
-            messages.append(f"  • ❌ Discarded: {len(reflections) - len(all_processed_articles)}")
+            messages.append(f"  • Relevant: {len(confirmed)}")
+            messages.append(f"  • Unclear: {len(unclear)}")
+            messages.append(f"  • Discarded: {len(reflections) - len(all_processed_articles)}")
             
             if all_processed_articles:
                 messages.append("\n--- Article Details ---")
@@ -111,7 +112,7 @@ def format_event_for_display(event: dict) -> str:
             candidates = node_data.get("protein_candidates", [])
             
             messages.append(f"\n{'='*60}")
-            messages.append(f"🧬 PROTEIN EXTRACTION - Found {len(candidates)} candidates")
+            messages.append(f"PROTEIN EXTRACTION - Found {len(candidates)} candidates")
             messages.append(f"{'='*60}")
             
             for i, candidate in enumerate(candidates, 1):
@@ -140,7 +141,7 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
         logger.info(f"[{job_id}] Worker started for query: {initial_state['original_query']}")
         
         try:
-            sse.publish({"message": "🚀 Pipeline started..."}, channel=job_id)
+            sse.publish({"message": "Pipeline started..."}, channel=job_id)
         except Exception as e:
             logger.error(f"[{job_id}] SSE publish test failed: {e}", exc_info=True)
 
@@ -197,7 +198,7 @@ def run_pipeline_worker(job_id: str, initial_state: PipelineState):
         finally:
             logger.info(f"[{job_id}] Worker finished.")
             try:
-                sse.publish({"message": "\n✅ PIPELINE COMPLETE"}, channel=job_id)
+                sse.publish({"message": "\nPIPELINE COMPLETE"}, channel=job_id)
             except Exception:
                 pass  # Failed to publish completion
 
@@ -217,7 +218,7 @@ def submit_job():
     initial_state: PipelineState = {
         "original_query": query,
         "target_protein_count": 5,
-        "search_batch_size": 2,
+        "search_batch_size": 15,
         "articles_to_process": [],
         "confirmed_articles": [],
         "unclear_articles": [],

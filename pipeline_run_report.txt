@@ -1,310 +1,621 @@
-2025-11-11 17:34:04,209 - INFO - \u2713 Redis connection successful
-2025-11-11 17:34:04,215 - INFO - \u2713 LangGraph compiled successfully.
-2025-11-11 17:34:04,221 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-11-12 01:07:03,349 - INFO - Redis connection successful
+2025-11-12 01:07:03,354 - INFO - LangGraph compiled successfully.
+2025-11-12 01:07:03,360 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
-2025-11-11 17:34:04,221 - INFO - [33mPress CTRL+C to quit[0m
-2025-11-11 17:34:06,725 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:06] "GET / HTTP/1.1" 200 -
-2025-11-11 17:34:06,774 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:06] "GET /static/logo.png HTTP/1.1" 200 -
-2025-11-11 17:34:09,651 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] New job submitted: drug targets for Coccidioides
-2025-11-11 17:34:09,651 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] Worker started for query: drug targets for Coccidioides
-2025-11-11 17:34:09,652 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] Worker thread started
-2025-11-11 17:34:09,652 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:09] "[32mPOST /submit HTTP/1.1[0m" 302 -
-2025-11-11 17:34:09,655 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] Progress page accessed
-2025-11-11 17:34:09,657 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:09] "GET /progress?job_id=5923851f-d81e-425a-8094-922b6c1369db&query=drug+targets+for+Coccidioides HTTP/1.1" 200 -
-2025-11-11 17:34:09,675 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:09] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
-2025-11-11 17:34:09,773 - INFO - --- LITERATURE EXTRACTION ---
-2025-11-11 17:34:09,773 - INFO - Tool: Calling local Asta Paper Finder service. Query: drug targets for Coccidioides...
-2025-11-11 17:34:47,883 - INFO - Tool: Response status: 200
-2025-11-11 17:34:47,888 - INFO - Tool: Success. Validated 2 articles.
+2025-11-12 01:07:03,360 - INFO - [33mPress CTRL+C to quit[0m
+2025-11-12 01:07:06,829 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:06] "GET / HTTP/1.1" 200 -
+2025-11-12 01:07:06,867 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:06] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2025-11-12 01:07:10,517 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] New job submitted: find papers that identify potential drug targets in Coccidioides
+2025-11-12 01:07:10,518 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] Worker started for query: find papers that identify potential drug targets in Coccidioides
+2025-11-12 01:07:10,518 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] Worker thread started
+2025-11-12 01:07:10,519 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:10] "[32mPOST /submit HTTP/1.1[0m" 302 -
+2025-11-12 01:07:10,527 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] Progress page accessed
+2025-11-12 01:07:10,529 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:10] "GET /progress?job_id=30991cf1-6a6e-4247-a8bc-46f9a56e7135&query=find+papers+that+identify+potential+drug+targets+in+Coccidioides HTTP/1.1" 200 -
+2025-11-12 01:07:10,549 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:10] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
+2025-11-12 01:07:10,610 - INFO - --- LITERATURE EXTRACTION ---
+2025-11-12 01:07:10,610 - INFO - Tool: Calling local Asta Paper Finder service. Query: find papers that identify potential drug targets i...
+2025-11-12 01:07:37,729 - INFO - Tool: Response status: 200
+2025-11-12 01:07:37,737 - INFO - Tool: Success. Validated 15 articles.
 
-2025-11-11 17:34:47,889 - INFO - 
+2025-11-12 01:07:37,737 - INFO - 
   DOI:           282285542
   Title:         Computational Approaches for Discovering Virulence Factors in Coccidioides
   Abstract:      Emerging respiratory dimorphic fungi, including Coccidioides, pose a growing public health threat due to their ability to cause severe disease and the limited therapeutic options. A growing gap exists between rapidly expanding computational data and slower traditional experimental methods for virulence factor identification, limiting progress in fungal pathogenesis research and therapeutic development. This review presents a framework for integrating computational and experimental methodologies to accelerate virulence discovery in Coccidioides. We examine predictive tools for adhesins, transporters, secreted effectors, carbohydrate-active enzymes (CAZymes), and secondary metabolites, plus therapeutic target prioritization strategies based on druggability, selectivity, essentiality, and precedent. Examples from Coccidioides and other World Health Organization-designated emerging fungi highlight how computational pipelines clarify pathogenic mechanisms and guide experimental design. We also assess machine learning, structural prediction, and reverse vaccinology approaches for enhance target discovery. By applying computational advances to Coccidioides research with experimental validation, this integrated approach can guide future antifungal drug and vaccine development.
 
-2025-11-11 17:34:47,889 - INFO - 
-  DOI:           229283880
-  Title:         Coccidioidomycosis: Changing Concepts and Knowledge Gaps
-  Abstract:      Although first described more than 120 years ago, much remains unknown about coccidioidomycosis. In this review, new information that has led to changing concepts will be reviewed and remaining gaps in our knowledge will be discussed. In particular, new ideas regarding ecology and epidemiology, problems and promises of diagnosis, controversies over management, and the possibility of a vaccine will be covered.
-
-2025-11-11 17:34:47,890 - INFO - Found 2 new articles.
-
-2025-11-11 17:34:47,959 - INFO - 127.0.0.1 - - [11/Nov/2025 17:34:47] "GET /stream?channel=5923851f-d81e-425a-8094-922b6c1369db HTTP/1.1" 200 -
-2025-11-11 17:34:47,960 - INFO - --- LITERATURE REFLECTION AGENT ---
-2025-11-11 17:34:49,363 - INFO - Tool: Reflecting on 2 articles with Gemini Flash...
-2025-11-11 17:35:02,457 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-2025-11-11 17:35:02,461 - INFO - Tool: Reflection complete. Validated 2 decisions.
-2025-11-11 17:35:02,461 - INFO - 
-  DOI:            282285542
-  Classification: true
-  Reasoning:      The abstract explicitly discusses a framework for virulence factor identification and therapeutic target prioritization strategies for antifungal drug and vaccine development in Coccidioides, mentioning specific categories of potential targets.
-
-2025-11-11 17:35:02,461 - INFO - 
-  DOI:            229283880
-  Classification: unclear
-  Reasoning:      This is a general review of coccidioidomycosis. While it mentions the 'possibility of a vaccine,' it does not discuss specific drug or vaccine targets, nor does it provide sufficient detail to suggest the full article would contain such specific information.
-
-2025-11-11 17:35:02,462 - INFO - RunUsage(input_tokens=585, output_tokens=2716, details={'thoughts_tokens': 2565, 'text_prompt_tokens': 585}, requests=1)
-2025-11-11 17:35:02,464 - INFO - Reflection complete. Relevant: 1. Unclear: 1. Discarded: 0 .
-
-2025-11-11 17:35:02,473 - INFO - --- ENTERING: NER AGENT ---
-
-2025-11-11 17:35:02,474 - INFO - NER Node: Processing article DOI: 282285542
-2025-11-11 17:35:02,474 - INFO - NER Node: Scanning abstract for DOI 282285542...
-2025-11-11 17:35:02,899 - INFO - Tool: Extracting proteins from text (length: 1289)...
-2025-11-11 17:35:05,323 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-2025-11-11 17:35:05,326 - INFO - Tool: NER ran but found no protein candidates.
-2025-11-11 17:35:05,327 - INFO - NER Node: Found 0 candidates in 282285542.
-2025-11-11 17:35:05,328 - INFO - NER Node: Finished. Total candidates found: 0
-
-2025-11-11 17:35:05,338 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] Found 0 candidates. Publishing results.
-2025-11-11 17:35:05,341 - INFO - [5923851f-d81e-425a-8094-922b6c1369db] Worker finished.
-2025-11-11 17:35:09,545 - INFO - 127.0.0.1 - - [11/Nov/2025 17:35:09] "GET / HTTP/1.1" 200 -
-2025-11-11 17:35:09,569 - INFO - 127.0.0.1 - - [11/Nov/2025 17:35:09] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
-2025-11-11 17:35:21,803 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] New job submitted: find papers that identify potential drug targets in Coccidioides
-2025-11-11 17:35:21,804 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] Worker started for query: find papers that identify potential drug targets in Coccidioides
-2025-11-11 17:35:21,804 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] Worker thread started
-2025-11-11 17:35:21,805 - INFO - 127.0.0.1 - - [11/Nov/2025 17:35:21] "[32mPOST /submit HTTP/1.1[0m" 302 -
-2025-11-11 17:35:21,809 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] Progress page accessed
-2025-11-11 17:35:21,810 - INFO - 127.0.0.1 - - [11/Nov/2025 17:35:21] "GET /progress?job_id=f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d&query=find+papers+that+identify+potential+drug+targets+in+Coccidioides HTTP/1.1" 200 -
-2025-11-11 17:35:21,813 - INFO - --- LITERATURE EXTRACTION ---
-2025-11-11 17:35:21,814 - INFO - Tool: Calling local Asta Paper Finder service. Query: find papers that identify potential drug targets i...
-2025-11-11 17:35:21,828 - INFO - 127.0.0.1 - - [11/Nov/2025 17:35:21] "[36mGET /static/logo.png HTTP/1.1[0m" 304 -
-2025-11-11 17:36:16,290 - INFO - Tool: Response status: 200
-2025-11-11 17:36:16,294 - INFO - Tool: Success. Validated 2 articles.
-
-2025-11-11 17:36:16,294 - INFO - 
-  DOI:           282285542
-  Title:         Computational Approaches for Discovering Virulence Factors in Coccidioides
-  Abstract:      Emerging respiratory dimorphic fungi, including Coccidioides, pose a growing public health threat due to their ability to cause severe disease and the limited therapeutic options. A growing gap exists between rapidly expanding computational data and slower traditional experimental methods for virulence factor identification, limiting progress in fungal pathogenesis research and therapeutic development. This review presents a framework for integrating computational and experimental methodologies to accelerate virulence discovery in Coccidioides. We examine predictive tools for adhesins, transporters, secreted effectors, carbohydrate-active enzymes (CAZymes), and secondary metabolites, plus therapeutic target prioritization strategies based on druggability, selectivity, essentiality, and precedent. Examples from Coccidioides and other World Health Organization-designated emerging fungi highlight how computational pipelines clarify pathogenic mechanisms and guide experimental design. We also assess machine learning, structural prediction, and reverse vaccinology approaches for enhance target discovery. By applying computational advances to Coccidioides research with experimental validation, this integrated approach can guide future antifungal drug and vaccine development.
-
-2025-11-11 17:36:16,294 - INFO - 
+2025-11-12 01:07:37,737 - INFO - 
   DOI:           10735708
   Title:         Comparative genomics allowed the identification of drug targets against human fungal pathogens
   Abstract:      BackgroundThe prevalence of invasive fungal infections (IFIs) has increased steadily worldwide in the last few decades. Particularly, there has been a global rise in the number of infections among immunosuppressed people. These patients present severe clinical forms of the infections, which are commonly fatal, and they are more susceptible to opportunistic fungal infections than non-immunocompromised people. IFIs have historically been associated with high morbidity and mortality, partly because of the limitations of available antifungal therapies, including side effects, toxicities, drug interactions and antifungal resistance. Thus, the search for alternative therapies and/or the development of more specific drugs is a challenge that needs to be met. Genomics has created new ways of examining genes, which open new strategies for drug development and control of human diseases.ResultsIn silico analyses and manual mining selected initially 57 potential drug targets, based on 55 genes experimentally confirmed as essential for Candida albicans or Aspergillus fumigatus and other 2 genes (kre2 and erg6) relevant for fungal survival within the host. Orthologs for those 57 potential targets were also identified in eight human fungal pathogens (C. albicans, A. fumigatus, Blastomyces dermatitidis, Paracoccidioides brasiliensis, Paracoccidioides lutzii, Coccidioides immitis, Cryptococcus neoformans and Histoplasma capsulatum). Of those, 10 genes were present in all pathogenic fungi analyzed and absent in the human genome. We focused on four candidates: trr1 that encodes for thioredoxin reductase, rim8 that encodes for a protein involved in the proteolytic activation of a transcriptional factor in response to alkaline pH, kre2 that encodes for \u03b1-1,2-mannosyltransferase and erg6 that encodes for \u0394(24)-sterol C-methyltransferase.ConclusionsOur data show that the comparative genomics analysis of eight fungal pathogens enabled the identification of four new potential drug targets. The preferred profile for fungal targets includes proteins conserved among fungi, but absent in the human genome. These characteristics potentially minimize toxic side effects exerted by pharmacological inhibition of the cellular targets. From this first step of post-genomic analysis, we obtained information relevant to future new drug development.
 
-2025-11-11 17:36:16,295 - INFO - Found 2 new articles.
+2025-11-12 01:07:37,738 - INFO - 
+  DOI:           16796429
+  Title:         New Horizons in Antifungal Therapy
+  Abstract:      Recent investigations have yielded both profound insights into the mechanisms required by pathogenic fungi for virulence within the human host, as well as novel potential targets for antifungal therapeutics. Some of these studies have resulted in the identification of novel compounds that act against these pathways and also demonstrate potent antifungal activity. However, considerable effort is required to move from pre-clinical compound testing to true clinical trials, a necessary step toward ultimately bringing new drugs to market. The rising incidence of invasive fungal infections mandates continued efforts to identify new strategies for antifungal therapy. Moreover, these life-threatening infections often occur in our most vulnerable patient populations. In addition to finding completely novel antifungal compounds, there is also a renewed effort to redirect existing drugs for use as antifungal agents. Several recent screens have identified potent antifungal activity in compounds previously indicated for other uses in humans. Together, the combined efforts of academic investigators and the pharmaceutical industry is resulting in exciting new possibilities for the treatment of invasive fungal infections.
 
-2025-11-11 17:36:16,301 - INFO - 127.0.0.1 - - [11/Nov/2025 17:36:16] "GET /stream?channel=f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d HTTP/1.1" 200 -
-2025-11-11 17:36:16,301 - INFO - --- LITERATURE REFLECTION AGENT ---
-2025-11-11 17:36:16,981 - INFO - Tool: Reflecting on 2 articles with Gemini Flash...
-2025-11-11 17:36:21,714 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-2025-11-11 17:36:21,717 - INFO - Tool: Reflection complete. Validated 2 decisions.
-2025-11-11 17:36:21,718 - INFO - 
+2025-11-12 01:07:37,738 - INFO - 
+  DOI:           277316900
+  Title:         Discovery of novel antifungal drugs via screening repurposing libraries against Coccidioides posadasii spherule initials
+  Abstract:      ABSTRACT Coccidioidomycosis or valley fever is a treatment-limited fungal infection endemic to the alkaline deserts of North and South America for which two classes of antifungals are typically used: the polyenes and the triazoles. In light of the limited usefulness of the echinocandins and a growing trend of azole resistance, it is essential that we identify novel antifungals. In this study, we have developed and optimized a screening methodology for identifying potential antifungals effective against Coccidioides spherule initials using a metabolic assay, used it to screen four diverse drug libraries with limited drug overlap, and established safety and efficacy data for a majority of the compounds, including the Broad Repurposing Hub, Prestwick Chemicals 1520, Selleck L8200 Anti-parasitic, and MedChemExpress CNS Penetrants libraries. Hits were defined as compounds with strong metabolic inhibition (\u226570%), which were significantly different compared to the median plate readout (B-scores \u2264 \u22123). We identified 30 promising hits and found 12 compounds exhibiting half-maximal inhibitory concentrations below 6 µM. Among these, oxethazaine, niclosamide ethanolamine, 10058-F4, niclosamide (NIC), and pentamidine isethionate showed synergy with amphotericin B, suggesting their potential use in combination therapy. Further assessment of lead compounds’ effects on spherules was conducted by image flow cytometry. Additionally, we explored the potential to use an attenuated, Biosafety Level 2 containment mutant, C. posadasii \u2206cts2/\u2206ard1/\u2206cts3 (\u2206T), as a surrogate model for drug screening. Overall, our findings provide a foundation for future research focused on screening and developing novel coccidioidomycosis treatments. IMPORTANCE The antifungal treatment arsenal is especially limited against Coccidioides. Due to toxicity concerns, amphotericin B is generally reserved for triazole-recalcitrant infections. Recent laboratory susceptibility tests show an increase in fluconazole resistance, highlighting a need for new treatments. We have developed a large-scale metabolic screening assay under Biosafety Level 3 containment to identify existing drugs with novel activity against Coccidioides spherules. This drug-repurposing approach represents a convenient and cost-effective strategy to increase the available antifungals effective against these infections. The antifungal treatment arsenal is especially limited against Coccidioides. Due to toxicity concerns, amphotericin B is generally reserved for triazole-recalcitrant infections. Recent laboratory susceptibility tests show an increase in fluconazole resistance, highlighting a need for new treatments. We have developed a large-scale metabolic screening assay under Biosafety Level 3 containment to identify existing drugs with novel activity against Coccidioides spherules. This drug-repurposing approach represents a convenient and cost-effective strategy to increase the available antifungals effective against these infections.
+
+2025-11-12 01:07:37,738 - INFO - 
+  DOI:           252859783
+  Title:         Genomic Data Mining Reveals Abundant Uncharacterized Transporters in Coccidioides immitis and Coccidioides posadasii
+  Abstract:      Coccidioides immitis and Coccidioides posadasii are causative agents of coccidioidomycosis, commonly known as Valley Fever. The increasing Valley Fever cases in the past decades, the expansion of endemic regions, and the rising azole drug-resistant strains have underscored an urgent need for a better understanding of Coccidioides biology and new antifungal strategies. Transporters play essential roles in pathogen survival, growth, infection, and adaptation, and are considered as potential drug targets. However, the composition and roles of transport machinery in Coccidioides remain largely unknown. In this study, genomic data mining revealed an abundant, uncharacterized repertoire of transporters in Coccidioides genomes. The catalog included 1288 and 1235 transporter homologs in C. immitis and C. posadasii, respectively. They were further annotated to class, subclass, family, subfamily and range of substrates based on the Transport Classification (TC) system. They may play diverse roles in nutrient uptake, metabolite secretion, ion homeostasis, drug efflux, or signaling. This study represents an initial effort for a systems-level characterization of the transport machinery in these understudied fungal pathogens.
+
+2025-11-12 01:07:37,739 - INFO - 
+  DOI:           31874240
+  Title:         Coccidioides posadasii Contains a Single 1,3-\u03b2-Glucan Synthase Gene That Appears To Be Essential for Growth
+  Abstract:      ABSTRACT 1,3-\u03b2-Glucan synthase is responsible for the synthesis of \u03b2-glucan, an essential cell wall structural component in most fungi. We sought to determine whether Coccidioides posadasii possesses genes homologous to known fungal FKS genes that encode the catalytic subunit of 1,3-\u03b2-glucan synthase. A single gene, designated FKS1, was identified, and examination of its predicted protein product showed a high degree of conservation with Fks proteins from other filamentous fungi. FKS1 is expressed at similar levels in mycelia and early spherulating cultures, and expression decreases as the spherules mature. We used Agrobacterium-mediated transformation to create strains that harbor \u0394FKS1::hygB, a null allele of FKS1, and hypothesize that Fks1p function is essential, due to our inability to purify this allele away from a complementing wild-type FKS1 allele in a heterokaryotic strain. The heterokaryon appears normal with respect to growth rate and arthroconidium production; however, microscopic examination of strains with \u0394FKS1::hygB alleles revealed abnormal swelling of hyphal elements.
+
+2025-11-12 01:07:37,739 - INFO - 
+  DOI:           275885922
+  Title:         Fungal Metabolomics: A Comprehensive Approach to Understanding Pathogenesis in Humans and Identifying Potential Therapeutics
+  Abstract:      Metabolomics has emerged as a transformative tool in the study of microbes, including pathogenic fungi, facilitating the identification of unique metabolic profiles that elucidate their pathogenic mechanisms, host interactions, and treatment resistance. This review highlights key applications of metabolomics in understanding fungal metabolites essential for human virulence, such as mycotoxins produced by various fungal species, including Aspergillus fumigatus (gliotoxin, fumagillins) and Candida species (phenylethyl alcohol, TCA cycle metabolites), and secondary metabolites that contribute to pathogenicity. It also explores the metabolic adaptations of fungi in relation to drug resistance and biofilm formation, revealing alterations in key metabolic pathways during infection, as seen in C. albicans and C. auris. Furthermore, metabolomics aids in deciphering host–pathogen interactions, showcasing how fungi like Cryptococcus neoformans and Candida modify host metabolism to promote survival and evade immune responses. The study of antifungal resistance mechanisms has also benefited from metabolomic approaches, identifying specific metabolite patterns that signify resistance, such as in Candida albicans and Candidozyma (Candida) auris, and informing new therapeutic strategies. The integration of metabolomics with other omics technologies is paving the way for a comprehensive understanding of fungal biology and pathogenesis. Such multi-omics approaches are crucial for discovering new therapeutic targets and developing innovative antifungal treatments. Thus, the purpose of this review is to provide an overview of how metabolomics is revolutionizing our understanding of fungal pathogenesis, drug resistance, and host interactions, and to highlight its potential for identifying new therapeutic targets and improving antifungal strategies.
+
+2025-11-12 01:07:37,739 - INFO - 
+  DOI:           280845227
+  Title:         Antifungal Drugs for the Treatment of Invasive Fungal Infections—A Limited Therapeutic Toolbox Facing Growing Resistances
+  Abstract:      Invasive fungal infections (IFIs) are one of the most significant public health challenges worldwide. Yet, research and communication thereof were left behind for a long time, until the WHO published a priority pathogens list to guide research, development, and public health action in October 2022. Indeed, due to the rising number of immunocompromised patients at risk and the high level of morbidity, mortality, and economic burden they entail, especially in low- and middle-income countries, IFIs are a serious public health threat. Fungal infections due to dimorphic fungi face additional challenges such as limited knowledge outside of endemic areas and restricted availability of antifungal molecules in areas affected by these infections. The number of related deaths per year is estimated at 2.5 million, but non-governmental organisations make a wider estimation, due to the difficulties in early in vitro diagnostic and troublesome collection and analysis of epidemiological data. Despite this fact, the therapeutic toolbox addressing these infections remains limited, with only four main families of molecules available so far. The antifungal therapeutic supply is composed of very toxic polyenes, the weakly selective and nearly unused 5-fluorocytosine, and azoles, some of which are becoming increasingly inefficient against IFIs. In the 2000–2020s, the fourth arising family consisted of safer semisynthetic echinocandins. Unfortunately, nowadays, more and more fungal isolates encountered in intensive care units exhibit a low susceptibility to echinocandins or are even multiresistant. In this review, we expose the current treatments available to fight against invasive fungal infections. We recall the discovery and physico-chemical aspects of these substances leading to structure/activity and structure/properties relationships. We particularly focus on the to-date resistances and their molecular mechanisms. We finally list some of the most relevant antifungal drug candidates, as they were freshly overviewed by the World Health Organization in April 2025, highlighting the importance of the molecular dimension of this pursuit toward the expansion of the antifungal therapeutic toolbox.
+
+2025-11-12 01:07:37,739 - INFO - 
+  DOI:           14108274
+  Title:         Comparative Genomic Analysis of Human Fungal Pathogens Causing Paracoccidioidomycosis
+  Abstract:      Paracoccidioides is a fungal pathogen and the cause of paracoccidioidomycosis, a health-threatening human systemic mycosis endemic to Latin America. Infection by Paracoccidioides, a dimorphic fungus in the order Onygenales, is coupled with a thermally regulated transition from a soil-dwelling filamentous form to a yeast-like pathogenic form. To better understand the genetic basis of growth and pathogenicity in Paracoccidioides, we sequenced the genomes of two strains of Paracoccidioides brasiliensis (Pb03 and Pb18) and one strain of Paracoccidioides lutzii (Pb01). These genomes range in size from 29.1 Mb to 32.9 Mb and encode 7,610 to 8,130 genes. To enable genetic studies, we mapped 94% of the P. brasiliensis Pb18 assembly onto five chromosomes. We characterized gene family content across Onygenales and related fungi, and within Paracoccidioides we found expansions of the fungal-specific kinase family FunK1. Additionally, the Onygenales have lost many genes involved in carbohydrate metabolism and fewer genes involved in protein metabolism, resulting in a higher ratio of proteases to carbohydrate active enzymes in the Onygenales than their relatives. To determine if gene content correlated with growth on different substrates, we screened the non-pathogenic onygenale Uncinocarpus reesii, which has orthologs for 91% of Paracoccidioides metabolic genes, for growth on 190 carbon sources. U. reesii showed growth on a limited range of carbohydrates, primarily basic plant sugars and cell wall components; this suggests that Onygenales, including dimorphic fungi, can degrade cellulosic plant material in the soil. In addition, U. reesii grew on gelatin and a wide range of dipeptides and amino acids, indicating a preference for proteinaceous growth substrates over carbohydrates, which may enable these fungi to also degrade animal biomass. These capabilities for degrading plant and animal substrates suggest a duality in lifestyle that could enable pathogenic species of Onygenales to transfer from soil to animal hosts.
+
+2025-11-12 01:07:37,739 - INFO - 
+  DOI:           236957982
+  Title:         Structural Characterization of the Reaction and Substrate Specificity Mechanisms of Pathogenic Fungal Acetyl-CoA Synthetases
+  Abstract:      Acetyl CoA synthetases (ACSs) are Acyl-CoA/NRPS/Luciferase (ANL) superfamily enzymes that couple acetate with CoA to generate acetyl CoA, a key component of central carbon metabolism in eukaryotes and prokaryotes. Normal mammalian cells are not dependent on ACSs, while tumor cells, fungi, and parasites rely on acetate as a precursor for acetyl CoA. Consequently, ACSs have emerged as a potential drug target. As part of a program to develop antifungal ACS inhibitors, we characterized fungal ACSs from five diverse human fungal pathogens using biochemical and structural studies. ACSs catalyze a two-step reaction involving adenylation of acetate followed by thioesterification with CoA. Our structural studies captured each step of these two half-reactions including the acetyl-adenylate intermediate of the first half-reaction in both the adenylation conformation and the thioesterification conformation and thus provide a detailed picture of the reaction mechanism. We also used a systematic series of increasingly larger alkyl adenosine esters as chemical probes to characterize the structural basis of the exquisite ACS specificity for acetate over larger carboxylic acid substrates. Consistent with previous biochemical and genetic data for other enzymes, structures of fungal ACSs with these probes bound show that a key tryptophan residue limits the size of the alkyl binding site and forces larger alkyl chains to adopt high energy conformers, disfavoring their efficient binding. Together, our analysis provides highly detailed structural models for both the reaction mechanism and substrate specificity that should be useful in designing selective inhibitors of eukaryotic ACSs as potential anticancer, antifungal, and antiparasitic drugs.
+
+2025-11-12 01:07:37,740 - INFO - 
+  DOI:           247171462
+  Title:         Coccidioidomycosis: A Contemporary Review
+  Abstract:      Coccidioidomycosis, colloquially known as Valley Fever, is an invasive dimorphic fungal infection caused by Coccidioides immitis and C. posadasii. The fungi are found in the arid desert soils of the southwestern US, as well as in parts of Mexico and Central and South America. Acquisition is typically via inhalation of arthroconidia which become airborne after both natural (e.g., earthquakes, dust storms, and fires) and human-related events (e.g., military maneuvers, recreational activities, agriculture, and construction). The incidence of infection in increasing likely a result of both climatic and populational changes. Further, the recognized geographic distribution of Coccidioides spp. is expanding, as cases are being diagnosed in new areas (e.g., eastern Washington, Oregon, and Utah). Most coccidioidal infections are asymptomatic (60%); however, approximately one-third develop a pulmonary illness which is a leading cause of community-acquired pneumonia in highly endemic areas. Uncommonly (0.5–2% of cases), the infection disseminates to extrapulmonary locations (e.g., skin, bones/joints, and the central nervous system), and is most commonly seen among persons with cellular immunodeficiencies (e.g., transplant recipients, HIV, and pregnancy) and non-Caucasian races (especially African Americans and Filipinos). The diagnosis of coccidioidomycosis requires astute clinical suspicion and laboratory findings, including positive serology, cultures, and/or histopathology results. Treatment is warranted among persons with pneumonia who have risk factors for complicated disease and among those with extrapulmonary disease. Novel antifungals with improved fungicidal activity and rapidity of action with fewer side effects and drug interactions are needed. Preventive strategies (e.g., education regarding the disease, dust avoidance, mask wearing, including among select groups, antifungal prophylaxis, and surveillance laboratory testing) are advised for residents and travelers to endemic areas. Currently, no preventive vaccine is available. Coccidioidomycosis has been recognized for over a century, and an expanding wealth of knowledge has been gained regarding this emerging infectious disease which will be reviewed here.
+
+2025-11-12 01:07:37,740 - INFO - 
+  DOI:           218631559
+  Title:         Defining Critical Genes During Spherule Remodeling and Endospore Development in the Fungal Pathogen, Coccidioides posadasii
+  Abstract:      Coccidioides immitis and C. posadasii are soil dwelling dimorphic fungi found in North and South America. Inhalation of aerosolized asexual conidia can result in asymptomatic, acute, or chronic respiratory infection. In the United States there are approximately 350,000 new infections per year. The Coccidioides genus is the only known fungal pathogen to make specialized parasitic spherules, which contain endospores that are released into the host upon spherule rupture. The molecular determinants involved in this key step of infection remain largely elusive as 49% of genes are hypothetical with unknown function. An attenuated mutant strain C. posadasii \u0394cts2/\u0394ard1/\u0394cts3 in which chitinase genes 2 and 3 were deleted was previously created for vaccine development. This strain does not complete endospore development, which prevents completion of the parasitic lifecycle. We sought to identify pathways active in the wild-type strain during spherule remodeling and endospore formation that have been affected by gene deletion in the mutant. We compared the transcriptome and volatile metabolome of the mutant \u0394cts2/\u0394ard1/\u0394cts3 to the wild-type C735. First, the global transcriptome was compared for both isolates using RNA sequencing. The raw reads were aligned to the reference genome using TOPHAT2 and analyzed using the Cufflinks package. Genes of interest were screened in an in vivo model using NanoString technology. Using solid phase microextraction (SPME) and comprehensive two-dimensional gas chromatography – time-of-flight mass spectrometry (GC × GC-TOFMS) volatile organic compounds (VOCs) were collected and analyzed. Our RNA-Seq analyses reveal approximately 280 significantly differentially regulated transcripts that are either absent or show opposite expression patterns in the mutant compared to the parent strain. This suggests that these genes are tied to networks impacted by deletion and may be critical for endospore development and/or spherule rupture in the wild-type strain. Of these genes, 14 were specific to the Coccidioides genus. We also found that the wild-type and mutant strains differed significantly in their production versus consumption of metabolites, with the mutant displaying increased nutrient scavenging. Overall, our results provide the first targeted list of key genes that are active during endospore formation and demonstrate that this approach can define targets for functional assays in future studies.
+
+2025-11-12 01:07:37,740 - INFO - 
+  DOI:           267502925
+  Title:         Galleria mellonella Model of Coccidioidomycosis for Drug Susceptibility Tests and Virulence Factor Identification
+  Abstract:      Coccidioidomycosis (CM) can manifest as respiratory and disseminated diseases that are caused by dimorphic fungal pathogens, such as Coccidioides species. The inhaled arthroconidia generated during the saprobic growth phase convert into multinucleated spherules in the lungs to complete the parasitic lifecycle. Research on coccidioidal virulence and pathogenesis primarily employs murine models typically associated with low lethal doses (LD100 < 100 spores). However, the Galleria model has recently garnered attention due to its immune system bearing both structural and functional similarities to the innate system of mammals. Our findings indicate that Coccidioides posadasii can convert and complete the parasitic cycle within the hemocoel of the Galleria larva. In Galleria, the LD100 is between 0.5 and 1.0 × 106 viable spores for the clinical isolate Coccidioides posadasii C735. Furthermore, we demonstrated the suitability of this model for in vivo antifungal susceptibility tests to validate the bioreactivity of newly discovered antifungals against Coccidioides. Additionally, we utilized this larva model to screen a Coccidioides posadasii mutant library showing attenuated virulence. Similarly, the identified attenuated coccidioidal mutants displayed a loss of virulence in a commonly used murine model of coccidioidomycosis. In this study, we demonstrated that Galleria larvae can be applied as a model for studying Coccidioides infection.
+
+2025-11-12 01:07:37,740 - INFO - 
+  DOI:           5540905
+  Title:         Population genomic sequencing of Coccidioides fungi reveals recent hybridization and transposon control.
+  Abstract:      We have sequenced the genomes of 18 isolates of the closely related human pathogenic fungi Coccidioides immitis and Coccidioides posadasii to more clearly elucidate population genomic structure, bringing the total number of sequenced genomes for each species to 10. Our data confirm earlier microsatellite-based findings that these species are genetically differentiated, but our population genomics approach reveals that hybridization and genetic introgression have recently occurred between the two species. The directionality of introgression is primarily from C. posadasii to C. immitis, and we find more than 800 genes exhibiting strong evidence of introgression in one or more sequenced isolates. We performed PCR-based sequencing of one region exhibiting introgression in 40 C. immitis isolates to confirm and better define the extent of gene flow between the species. We find more coding sequence than expected by chance in the introgressed regions, suggesting that natural selection may play a role in the observed genetic exchange. We find notable heterogeneity in repetitive sequence composition among the sequenced genomes and present the first detailed genome-wide profile of a repeat-induced point mutation (RIP) process distinctly different from what has been observed in Neurospora. We identify promiscuous HLA-I and HLA-II epitopes in both proteomes and discuss the possible implications of introgression and population genomic data for public health and vaccine candidate prioritization. This study highlights the importance of population genomic data for detecting subtle but potentially important phenomena such as introgression.
+
+2025-11-12 01:07:37,740 - INFO - 
+  DOI:           3832714
+  Title:         Antifungal therapeutics for dimorphic fungal pathogens
+  Abstract:      ABSTRACT Dimorphic fungi cause several endemic mycoses which range from subclinical respiratory infections to life-threatening systemic disease. Pathogenic-phase cells of Histoplasma, Blastomyces, Paracoccidioides and Coccidioides escape elimination by the innate immune response with control ultimately requiring activation of cell-mediated immunity. Clinical management of disease relies primarily on antifungal compounds; however, dimorphic fungal pathogens create a number of challenges for antifungal drug therapy. In addition to the drug toxicity issues known for current antifungals, barriers to efficient drug treatment of dimorphic fungal infections include natural resistance to the echinocandins, residence of fungal cells within immune cells, the requirement for systemic delivery of drugs, prolonged treatment times, potential for latent infections, and lack of optimized standardized methodology for in vitro testing of drug susceptibilities. This review will highlight recent advances, current therapeutic options, and new compounds on the horizon for treating infections by dimorphic fungal pathogens.
+
+2025-11-12 01:07:37,741 - INFO - Found 15 new articles.
+
+2025-11-12 01:07:37,824 - INFO - 127.0.0.1 - - [12/Nov/2025 01:07:37] "GET /stream?channel=30991cf1-6a6e-4247-a8bc-46f9a56e7135 HTTP/1.1" 200 -
+2025-11-12 01:07:37,825 - INFO - --- LITERATURE REFLECTION AGENT ---
+2025-11-12 01:07:39,680 - INFO - Tool: Reflecting on 15 articles with Gemini Flash...
+2025-11-12 01:07:59,075 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:07:59,079 - INFO - Tool: Reflection complete. Validated 15 decisions.
+2025-11-12 01:07:59,080 - INFO - 
   DOI:            282285542
-  Classification: unclear
-  Reasoning:      This is a review article discussing computational and experimental frameworks for accelerating virulence discovery and therapeutic target prioritization in Coccidioides. While it is highly relevant to target identification, it does not present novel drug targets from its own research, but rather methodologies for finding them. The full text may contain specific targets, but the abstract does not explicitly state them as findings of this particular study.
+  Classification: true
+  Reasoning:      This abstract is a review that directly discusses frameworks and strategies for identifying and prioritizing antifungal drug and vaccine targets in Coccidioides, aligning with the requirement for articles related to potential targets.
 
-2025-11-11 17:36:21,718 - INFO - 
+2025-11-12 01:07:59,080 - INFO - 
   DOI:            10735708
   Classification: true
-  Reasoning:      The abstract explicitly identifies four specific genes (trr1, rim8, kre2, and erg6) as new potential drug targets. These targets are conserved among several fungal pathogens, including Coccidioides immitis and Aspergillus fumigatus, and are absent in the human genome, making them suitable for antifungal drug development.
+  Reasoning:      This abstract explicitly identifies and discusses specific potential drug targets (trr1, rim8, kre2, erg6) in human fungal pathogens, including Coccidioides immitis and Aspergillus fumigatus, making it highly relevant.
 
-2025-11-11 17:36:21,718 - INFO - RunUsage(input_tokens=960, output_tokens=999, details={'thoughts_tokens': 792, 'text_prompt_tokens': 960}, requests=1)
-2025-11-11 17:36:21,721 - INFO - Reflection complete. Relevant: 1. Unclear: 1. Discarded: 0 .
+2025-11-12 01:07:59,080 - INFO - 
+  DOI:            16796429
+  Classification: unclear
+  Reasoning:      This is a general review on antifungal drug discovery. While it mentions 'novel potential targets,' it does not specify any for Coccidioides or Aspergillus, making its direct relevance to specific targets unclear without the full text.
 
-2025-11-11 17:36:21,728 - INFO - --- ENTERING: NER AGENT ---
+2025-11-12 01:07:59,080 - INFO - 
+  DOI:            277316900
+  Classification: true
+  Reasoning:      This abstract describes the identification of novel antifungals against Coccidioides through a drug screening methodology, directly addressing the search for potential drug treatments for Coccidioides.
 
-2025-11-11 17:36:21,728 - INFO - NER Node: Processing article DOI: 10735708
-2025-11-11 17:36:21,728 - INFO - NER Node: Scanning abstract for DOI 10735708...
-2025-11-11 17:36:22,395 - INFO - Tool: Extracting proteins from text (length: 2350)...
-2025-11-11 17:36:33,184 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
-2025-11-11 17:36:33,187 - INFO - Tool: NER complete. Extracted 32 candidates.
-2025-11-11 17:36:33,187 - INFO - Tool Usage: RunUsage(input_tokens=809, output_tokens=2483, details={'thoughts_tokens': 1280, 'text_prompt_tokens': 809}, requests=1)
-2025-11-11 17:36:33,190 - INFO - NER Node: Found 32 candidates in 10735708.
-2025-11-11 17:36:33,190 - INFO - 
+2025-11-12 01:07:59,080 - INFO - 
+  DOI:            252859783
+  Classification: true
+  Reasoning:      This abstract explicitly identifies 'transporters' as potential drug targets in Coccidioides immitis and C. posadasii and describes their characterization, making it directly relevant to potential drug targets.
+
+2025-11-12 01:07:59,080 - INFO - 
+  DOI:            31874240
+  Classification: true
+  Reasoning:      This abstract investigates 1,3-\u03b2-Glucan synthase (FKS1) in Coccidioides posadasii, an essential cell wall component, and aims to determine its essentiality, indicating it as a potential drug target.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            275885922
+  Classification: unclear
+  Reasoning:      This is a review about metabolomics in fungi. While it mentions 'new therapeutic targets' and Aspergillus fumigatus, it's a general methodological review and doesn't specify any direct targets for Coccidioides or Aspergillus.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            280845227
+  Classification: false
+  Reasoning:      This abstract reviews existing treatments and resistance mechanisms for invasive fungal infections. It mentions 'antifungal drug candidates' but does not discuss the identification or characterization of potential drug or vaccine targets for Coccidioides or Aspergillus.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            14108274
+  Classification: unclear
+  Reasoning:      This abstract focuses on Paracoccidioides, a related dimorphic fungus. While it discusses gene families and metabolic capabilities, it does not explicitly mention or identify potential drug or vaccine targets for Coccidioides or Aspergillus.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            236957982
+  Classification: true
+  Reasoning:      This abstract characterizes fungal Acetyl CoA synthetases (ACSs) and identifies them as a potential drug target for antifungal inhibitors, which would include fungi like Coccidioides and Aspergillus due to the broad nature of the findings.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            247171462
+  Classification: false
+  Reasoning:      This is a general review of Coccidioidomycosis, its epidemiology, diagnosis, and treatment needs. It does not discuss or identify specific potential drug or vaccine targets.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            218631559
+  Classification: true
+  Reasoning:      This abstract aims to 'define targets for functional assays' by comparing gene expression and metabolites in wild-type and mutant Coccidioides posadasii, directly identifying potential molecular targets involved in pathogenesis.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            267502925
+  Classification: false
+  Reasoning:      This abstract describes the development and validation of an experimental model (Galleria mellonella larva) for studying Coccidioides infection and testing antifungals. It focuses on the model itself, not on identifying drug or vaccine targets.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            5540905
+  Classification: true
+  Reasoning:      This abstract explicitly mentions identifying 'promiscuous HLA-I and HLA-II epitopes' and discusses their implications for 'vaccine candidate prioritization' in Coccidioides, directly addressing potential vaccine targets.
+
+2025-11-12 01:07:59,081 - INFO - 
+  DOI:            3832714
+  Classification: false
+  Reasoning:      This is a general review about challenges and current status of antifungal therapy for dimorphic fungi. It does not identify or discuss specific drug or vaccine targets for Coccidioides or Aspergillus.
+
+2025-11-12 01:07:59,081 - INFO - RunUsage(input_tokens=5639, output_tokens=3699, details={'thoughts_tokens': 2675, 'text_prompt_tokens': 5639}, requests=1)
+2025-11-12 01:07:59,083 - INFO - Reflection complete. Relevant: 8. Unclear: 3. Discarded: 4 .
+
+2025-11-12 01:07:59,091 - INFO - --- ENTERING: NER AGENT ---
+
+2025-11-12 01:07:59,091 - INFO - NER Node: Processing article DOI: 282285542
+2025-11-12 01:07:59,091 - INFO - NER Node: Scanning abstract for DOI 282285542...
+2025-11-12 01:07:59,774 - INFO - Tool: Extracting proteins from text (length: 1289)...
+2025-11-12 01:08:07,983 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:08:07,987 - INFO - Tool: NER complete. Extracted 4 candidates.
+2025-11-12 01:08:07,987 - INFO - Tool Usage: RunUsage(input_tokens=555, output_tokens=1609, details={'thoughts_tokens': 1478, 'text_prompt_tokens': 555}, requests=1)
+2025-11-12 01:08:07,990 - INFO - NER Node: Found 4 candidates in 282285542.
+2025-11-12 01:08:07,991 - INFO - NER Node: Processing article DOI: 10735708
+2025-11-12 01:08:07,991 - INFO - NER Node: Scanning abstract for DOI 10735708...
+2025-11-12 01:08:08,754 - INFO - Tool: Extracting proteins from text (length: 2350)...
+2025-11-12 01:08:31,018 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:08:31,025 - INFO - Tool: NER complete. Extracted 56 candidates.
+2025-11-12 01:08:31,025 - INFO - Tool Usage: RunUsage(input_tokens=809, output_tokens=4909, details={'thoughts_tokens': 2845, 'text_prompt_tokens': 809}, requests=1)
+2025-11-12 01:08:31,027 - INFO - NER Node: Found 56 candidates in 10735708.
+2025-11-12 01:08:31,027 - INFO - NER Node: Processing article DOI: 277316900
+2025-11-12 01:08:31,027 - INFO - NER Node: Scanning abstract for DOI 277316900...
+2025-11-12 01:08:31,806 - INFO - Tool: Extracting proteins from text (length: 3011)...
+2025-11-12 01:08:35,325 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:08:35,328 - INFO - Tool: NER ran but found no protein candidates.
+2025-11-12 01:08:35,330 - INFO - NER Node: Found 0 candidates in 277316900.
+2025-11-12 01:08:35,331 - INFO - NER Node: Processing article DOI: 252859783
+2025-11-12 01:08:35,331 - INFO - NER Node: Scanning abstract for DOI 252859783...
+2025-11-12 01:08:36,092 - INFO - Tool: Extracting proteins from text (length: 1231)...
+2025-11-12 01:08:39,352 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:08:39,355 - INFO - Tool: NER ran but found no protein candidates.
+2025-11-12 01:08:39,357 - INFO - NER Node: Found 0 candidates in 252859783.
+2025-11-12 01:08:39,357 - INFO - NER Node: Processing article DOI: 31874240
+2025-11-12 01:08:39,357 - INFO - NER Node: Scanning abstract for DOI 31874240...
+2025-11-12 01:08:40,125 - INFO - Tool: Extracting proteins from text (length: 1102)...
+2025-11-12 01:08:43,311 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:08:43,314 - INFO - Tool: NER complete. Extracted 2 candidates.
+2025-11-12 01:08:43,315 - INFO - Tool Usage: RunUsage(input_tokens=598, output_tokens=596, details={'thoughts_tokens': 494, 'text_prompt_tokens': 598}, requests=1)
+2025-11-12 01:08:43,318 - INFO - NER Node: Found 2 candidates in 31874240.
+2025-11-12 01:08:43,319 - INFO - NER Node: Processing article DOI: 236957982
+2025-11-12 01:08:43,319 - INFO - NER Node: Scanning abstract for DOI 236957982...
+2025-11-12 01:08:44,088 - INFO - Tool: Extracting proteins from text (length: 1752)...
+2025-11-12 01:09:06,249 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:09:06,253 - INFO - Tool: NER ran but found no protein candidates.
+2025-11-12 01:09:06,255 - INFO - NER Node: Found 0 candidates in 236957982.
+2025-11-12 01:09:06,255 - INFO - NER Node: Processing article DOI: 218631559
+2025-11-12 01:09:06,255 - INFO - NER Node: Scanning abstract for DOI 218631559...
+2025-11-12 01:09:07,039 - INFO - Tool: Extracting proteins from text (length: 2458)...
+2025-11-12 01:09:13,111 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:09:13,115 - INFO - Tool: NER complete. Extracted 2 candidates.
+2025-11-12 01:09:13,115 - INFO - Tool Usage: RunUsage(input_tokens=846, output_tokens=985, details={'thoughts_tokens': 886, 'text_prompt_tokens': 846}, requests=1)
+2025-11-12 01:09:13,117 - INFO - NER Node: Found 2 candidates in 218631559.
+2025-11-12 01:09:13,118 - INFO - NER Node: Processing article DOI: 5540905
+2025-11-12 01:09:13,118 - INFO - NER Node: Scanning abstract for DOI 5540905...
+2025-11-12 01:09:13,884 - INFO - Tool: Extracting proteins from text (length: 1649)...
+2025-11-12 01:09:21,302 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-11-12 01:09:21,306 - INFO - Tool: NER ran but found no protein candidates.
+2025-11-12 01:09:21,308 - INFO - NER Node: Found 0 candidates in 5540905.
+2025-11-12 01:09:21,309 - INFO - 
+  Protein Name:    adhesins
+  Species:         Coccidioides
+  Accession ID:    None
+  Source DOI       282285542
+
+2025-11-12 01:09:21,309 - INFO - 
+  Protein Name:    transporters
+  Species:         Coccidioides
+  Accession ID:    None
+  Source DOI       282285542
+
+2025-11-12 01:09:21,309 - INFO - 
+  Protein Name:    secreted effectors
+  Species:         Coccidioides
+  Accession ID:    None
+  Source DOI       282285542
+
+2025-11-12 01:09:21,309 - INFO - 
+  Protein Name:    CAZymes
+  Species:         Coccidioides
+  Accession ID:    None
+  Source DOI       282285542
+
+2025-11-12 01:09:21,309 - INFO - 
   Protein Name:    trr1
   Species:         Candida albicans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,190 - INFO - 
+2025-11-12 01:09:21,310 - INFO - 
   Protein Name:    trr1
   Species:         Aspergillus fumigatus
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,190 - INFO - 
+2025-11-12 01:09:21,310 - INFO - 
   Protein Name:    trr1
   Species:         Blastomyces dermatitidis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,190 - INFO - 
+2025-11-12 01:09:21,310 - INFO - 
   Protein Name:    trr1
   Species:         Paracoccidioides brasiliensis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,190 - INFO - 
+2025-11-12 01:09:21,310 - INFO - 
   Protein Name:    trr1
   Species:         Paracoccidioides lutzii
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    trr1
   Species:         Coccidioides immitis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    trr1
   Species:         Cryptococcus neoformans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    trr1
   Species:         Histoplasma capsulatum
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Candida albicans
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Aspergillus fumigatus
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Blastomyces dermatitidis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Paracoccidioides brasiliensis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Paracoccidioides lutzii
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Coccidioides immitis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Cryptococcus neoformans
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
+  Protein Name:    thioredoxin reductase
+  Species:         Histoplasma capsulatum
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    rim8
   Species:         Candida albicans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    rim8
   Species:         Aspergillus fumigatus
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,311 - INFO - 
   Protein Name:    rim8
   Species:         Blastomyces dermatitidis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    rim8
   Species:         Paracoccidioides brasiliensis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    rim8
   Species:         Paracoccidioides lutzii
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,191 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    rim8
   Species:         Coccidioides immitis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    rim8
   Species:         Cryptococcus neoformans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    rim8
   Species:         Histoplasma capsulatum
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    kre2
   Species:         Candida albicans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    kre2
   Species:         Aspergillus fumigatus
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    kre2
   Species:         Blastomyces dermatitidis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,312 - INFO - 
   Protein Name:    kre2
   Species:         Paracoccidioides brasiliensis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,313 - INFO - 
   Protein Name:    kre2
   Species:         Paracoccidioides lutzii
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,313 - INFO - 
   Protein Name:    kre2
   Species:         Coccidioides immitis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,313 - INFO - 
   Protein Name:    kre2
   Species:         Cryptococcus neoformans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,313 - INFO - 
   Protein Name:    kre2
   Species:         Histoplasma capsulatum
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,313 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Candida albicans
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,313 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Aspergillus fumigatus
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,313 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Blastomyces dermatitidis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Paracoccidioides brasiliensis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Paracoccidioides lutzii
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Coccidioides immitis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Cryptococcus neoformans
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
+  Protein Name:    \u03b1-1,2-mannosyltransferase
+  Species:         Histoplasma capsulatum
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,314 - INFO - 
   Protein Name:    erg6
   Species:         Candida albicans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,192 - INFO - 
+2025-11-12 01:09:21,314 - INFO - 
   Protein Name:    erg6
   Species:         Aspergillus fumigatus
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,314 - INFO - 
   Protein Name:    erg6
   Species:         Blastomyces dermatitidis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,315 - INFO - 
   Protein Name:    erg6
   Species:         Paracoccidioides brasiliensis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,315 - INFO - 
   Protein Name:    erg6
   Species:         Paracoccidioides lutzii
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,315 - INFO - 
   Protein Name:    erg6
   Species:         Coccidioides immitis
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,315 - INFO - 
   Protein Name:    erg6
   Species:         Cryptococcus neoformans
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - 
+2025-11-12 01:09:21,315 - INFO - 
   Protein Name:    erg6
   Species:         Histoplasma capsulatum
   Accession ID:    None
   Source DOI       10735708
 
-2025-11-11 17:36:33,193 - INFO - NER Node: Finished. Total candidates found: 32
+2025-11-12 01:09:21,315 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Candida albicans
+  Accession ID:    None
+  Source DOI       10735708
 
-2025-11-11 17:36:33,200 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] Found 32 candidates. Publishing results.
-2025-11-11 17:36:33,203 - INFO - [f9c15bbb-cc5c-441f-ab9f-b44a6adeec8d] Worker finished.
+2025-11-12 01:09:21,315 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Aspergillus fumigatus
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Blastomyces dermatitidis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Paracoccidioides brasiliensis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Paracoccidioides lutzii
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Coccidioides immitis
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Cryptococcus neoformans
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    \u0394(24)-sterol C-methyltransferase
+  Species:         Histoplasma capsulatum
+  Accession ID:    None
+  Source DOI       10735708
+
+2025-11-12 01:09:21,316 - INFO - 
+  Protein Name:    1,3-\u03b2-Glucan synthase
+  Species:         Coccidioides posadasii
+  Accession ID:    None
+  Source DOI       31874240
+
+2025-11-12 01:09:21,317 - INFO - 
+  Protein Name:    Fks1
+  Species:         Coccidioides posadasii
+  Accession ID:    None
+  Source DOI       31874240
+
+2025-11-12 01:09:21,317 - INFO - 
+  Protein Name:    chitinase 2
+  Species:         Coccidioides posadasii
+  Accession ID:    None
+  Source DOI       218631559
+
+2025-11-12 01:09:21,317 - INFO - 
+  Protein Name:    chitinase 3
+  Species:         Coccidioides posadasii
+  Accession ID:    None
+  Source DOI       218631559
+
+2025-11-12 01:09:21,317 - INFO - NER Node: Finished. Total candidates found: 64
+
+2025-11-12 01:09:21,370 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] Found 64 candidates. Publishing results.
+2025-11-12 01:09:21,417 - INFO - [30991cf1-6a6e-4247-a8bc-46f9a56e7135] Worker finished.

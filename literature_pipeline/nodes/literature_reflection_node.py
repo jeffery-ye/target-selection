@@ -56,8 +56,8 @@ def literature_reflection_node(state: PipelineState) -> Dict:
         # Return the state update
         # Only 'true' articles proceed to the next node (NER)
         return {
-            "confirmed_articles": articles_for_ner + articles_for_full_text,
-            # "unclear_articles": articles_for_full_text,
+            "confirmed_articles": articles_for_ner,
+            "unclear_articles": articles_for_full_text,
             "reflection_results": reflection_batch.reflections
         }
 
