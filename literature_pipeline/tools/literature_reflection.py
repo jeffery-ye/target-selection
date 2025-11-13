@@ -3,9 +3,7 @@ from typing import List
 from ..schemas import Article, ReflectionBatch
 from dotenv import load_dotenv
 from pydantic_ai import Agent
-from pydantic_ai.models.openai import OpenAIChatModel
-from pydantic_ai.providers.ollama import OllamaProvider
-''
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -34,16 +32,8 @@ def article_reflection_tool(articles: List[Article], requirements: str) -> Refle
     for article in articles:
         text_for_llm += f"DOI: {article.doi}\nABSTRACT: {article.abstract}\n\n"
 
-    # open source llm for testing purposes  
-    model_name=''
-    ollama_model = OpenAIChatModel(
-        model_name=model_name,
-        provider=OllamaProvider(base_url='http://localhost:11434/v1'),  
-    )
-
     agent = Agent(  
-        'google-gla:gemini-2.5-flash', # Uncomment to use gemini model
-        # ollama_model, # Uncomment to use model from local
+        'google-gla:gemini-2.5-flash', 
         output_type=ReflectionBatch,  
         instructions=(f"""
             Review the following scientific abstracts based on this requirement: '{requirements}'
