@@ -39,7 +39,7 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
         "query": query,
         "limit": batch_size,
         "fields": ARTICLE_FIELDS,
-        "year": f"2021:{current_year}"
+        #"year": f"2021:{current_year}"
     }
     
     logger.info(f"Tool: Calling Semantic Scholar API. Query: {query[:50]}... Size: {batch_size}")
@@ -84,7 +84,12 @@ def search_asta_mcp_tool(query: str, batch_size: int) -> List[Article]:
                 "relevance_score": relevance_score
             })
         
-        validated_articles = ArticleListAdapter.validate_python(transformed_results)
+        # Filter out articles with no DOI before validation -- we need good papers
+        articles_with_doi = [
+            article for article in transformed_results if article.get("doi")
+        ]
+        
+        validated_articles = ArticleListAdapter.validate_python(articles_with_doi)
         
         logger.info(f"Tool: Success. Found {len(validated_articles)} articles.\n")
         for article in validated_articles:
