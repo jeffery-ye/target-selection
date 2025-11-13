@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Target Selection Pipeline</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+    html {
+      /* Font size adjustment */
+      font-size: 90%; 
+    }
+    
+    /* Override Pico's container max-width */
+    body > main {
+      max-width: 100%;
+      padding: 1rem 2rem;
+    }
+    
+    /* Optional: Add some reasonable max-width for readability on very wide screens */
+    @media (min-width: 1920px) {
+      body > main {
+        max-width: 1800px;
+        margin: 0 auto;
+      }
+    }
+    
+    #log-output {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      max-height: 600px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    #results-table {
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    #error-box {
+      background: #fee;
+      border: 1px solid #fcc;
+      padding: 1rem;
+      border-radius: 4px;
+      color: #c00;
+    }
+
+    /* Logo styles */
+    .app-logo {
+      position: fixed;
+      top: 1.5rem;
+      right: 2rem;
+      z-index: 1001;
+    }
+    
+    .app-logo img {
+      max-height: 60px; 
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-logo">
+    <img src="/static/logo.png" alt="Logo" onerror="this.style.display='none'">
+  </div>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

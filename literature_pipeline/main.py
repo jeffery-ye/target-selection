@@ -1,3 +1,6 @@
+"""
+This is no longer the entry point, use app.py
+"""
 import pprint
 import logging
 import warnings

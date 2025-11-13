@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block content %}
+  <header>
+    <h2>Processing Pipeline</h2>
+    <p><strong>Query:</strong> {{ query }}</p>
+  </header>
+  
+  <!-- Status indicator -->
+  <div id="status-box">
+    <progress id="progress-bar"></progress>
+    <p id="status-message">⏳ Pipeline running... Please wait.</p>
+  </div>
+  
+  <!-- Error box, hidden by default -->
+  <div id="error-box" style="display: none;">
+    <strong>Pipeline Error:</strong>
+    <p id="error-message"></p>
+    <a href="/" role="button" class="secondary">Try again</a>
+  </div>
+  
+  <!-- Final results table, hidden by default -->
+  <div id="results-container" style="display: none;">
+    <h3>Extracted Protein Candidates</h3>
+    <table id="results-table">
+      <thead>
+        <tr>
+          <th>Protein Name</th>
+          <th>Species</th>
+          <th>Accession ID</th>
+          <th>Source DOI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+    <a href="/" role="button" class="secondary">Start New Query</a>
+  </div>
+  <br>
+  
+  <!-- Live log stream, visible during processing -->
+  <details id="log-details" open>
+    <summary>Live Pipeline Log</summary>
+    <pre id="log-output"></pre>
+  </details>
+  
+  <!-- JavaScript to handle Server-Sent Events -->
+  <script>
+    const jobId = "{{ job_id }}";
+    const logOutput = document.getElementById('log-output');
+    const resultsContainer = document.getElementById('results-container');
+    const resultsTableBody = document.querySelector('#results-table tbody');
+    const statusBox = document.getElementById('status-box');
+    const statusMessage = document.getElementById('status-message');
+    const errorBox = document.getElementById('error-box');
+    const errorMessage = document.getElementById('error-message');
+    const progressBar = document.getElementById('progress-bar');
+    
+    console.log('Connecting to SSE stream for job:', jobId);
+    const sseUrl = `/stream?channel=${jobId}`;
+    console.log('SSE URL:', sseUrl);
+    
+    // Create EventSource connection
+    const eventSource = new EventSource(sseUrl);
+    
+    console.log('EventSource created, readyState:', eventSource.readyState);
+    
+    eventSource.onopen = function(event) {
+        console.log('SSE connection opened', event);
+        logOutput.textContent += '=== Connected to server ===\n';
+    };
+    
+    eventSource.onmessage = function(event) {
+        console.log('SSE message received:', event.data);
+        
+        try {
+            const data = JSON.parse(event.data);
+            console.log('Parsed data:', data);
+            
+            if (data.message) {
+                // Append log message
+                logOutput.textContent += data.message + '\n';
+                logOutput.scrollTop = logOutput.scrollHeight;
+                
+                // Check for completion message
+                if (data.message.includes('PIPELINE COMPLETE')) {
+                    statusMessage.innerHTML = 'Pipeline complete!';
+                    statusMessage.style.color = 'green';
+                    progressBar.removeAttribute('indeterminate');
+                    progressBar.value = 100;
+                    eventSource.close();
+                }
+            }
+            
+            if (data.results) {
+                // Hide progress, show results
+                statusBox.style.display = 'none';
+                displayResults(data.results);
+                eventSource.close();
+            }
+            
+            if (data.error) {
+                // Show error
+                statusBox.style.display = 'none';
+                errorBox.style.display = 'block';
+                errorMessage.textContent = data.error;
+                eventSource.close();
+            }
+        } catch (e) {
+            console.error('Failed to parse SSE data:', e);
+            console.error('Raw data:', event.data);
+        }
+    };
+    
+    eventSource.onerror = function(error) {
+        console.error('EventSource error:', error);
+        console.error('ReadyState:', eventSource.readyState);
+        logOutput.textContent += '\n--- Stream connection error. Stopping. ---\n';
+        
+        statusBox.style.display = 'none';
+        errorBox.style.display = 'block';
+        errorMessage.textContent = 'Connection to server lost. Please try again.';
+        eventSource.close();
+    };
+    
+    // Log readyState changes for debugging
+    setInterval(() => {
+        console.log('EventSource readyState:', eventSource.readyState);
+    }, 2000);
+    
+    function displayResults(candidates) {
+        if (!candidates || candidates.length === 0) {
+            resultsContainer.style.display = 'block';
+            resultsTableBody.innerHTML = '<tr><td colspan="4">No protein candidates found.</td></tr>';
+            return;
+        }
+        
+        console.log('Displaying', candidates.length, 'candidates');
+        
+        // Clear existing rows
+        resultsTableBody.innerHTML = '';
+        
+        // Add a row for each candidate
+        candidates.forEach((candidate, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${candidate.protein_name || 'N/A'}</td>
+                <td>${candidate.species || 'N/A'}</td>
+                <td>${candidate.accession_id || 'None'}</td>
+                <td>${candidate.source_doi ? '<a href="https://doi.org/' + candidate.source_doi + '" target="_blank">' + candidate.source_doi + '</a>' : 'N/A'}</td>
+            `;
+            resultsTableBody.appendChild(row);
+        });
+        
+        // Show the results container
+        resultsContainer.style.display = 'block';
+    }
+  </script>
+{% endblock %}
